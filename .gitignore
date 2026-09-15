@@ -10,3 +10,21 @@ playwright-report/
 .DS_Store
 *.log
 *.tsbuildinfo
+
+# production
+/build
+dist/
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
