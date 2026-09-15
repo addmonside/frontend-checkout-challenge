@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: checkout-api:local
+    ports:
+      - '4000:4000'
+    environment:
+      HOST: 0.0.0.0
+      PORT: '4000'
+      DATA_FILE: /app/.data/store.json
+      PAYMENT_DELAY_MS: '1200'
+    volumes:
+      - api-data:/app/.data
+    restart: unless-stopped
+
+volumes:
+  api-data:
