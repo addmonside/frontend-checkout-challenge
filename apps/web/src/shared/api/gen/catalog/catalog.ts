@@ -20,7 +20,7 @@ import type {
 
 import type { Def0, ListProducts200 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -86,9 +86,9 @@ export const getListProductsUrl = () => {
  * @summary Каталог товаров
  */
 export const listProducts = async (
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<listProductsResponse> => {
-  return customFetch<listProductsResponse>(getListProductsUrl(), {
+  return fetchClient<listProductsResponse>(getListProductsUrl(), {
     ...options,
     method: 'GET',
   });
@@ -103,7 +103,7 @@ export const getListProductsQueryOptions = <
   TError = void | Def0,
 >(options?: {
   query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listProducts>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -136,7 +136,7 @@ export function useListProducts<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -154,7 +154,7 @@ export function useListProducts<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -164,7 +164,7 @@ export function useListProducts<
 >(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listProducts>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -178,7 +178,7 @@ export function useListProducts<
 >(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listProducts>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

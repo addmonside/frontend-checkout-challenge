@@ -13,8 +13,8 @@ export default defineConfig({
       httpClient: 'fetch',
       override: {
         mutator: {
-          path: 'src/shared/api/client-fetch/client-fetch.ts',
-          name: 'customFetch',
+          path: 'src/shared/api/fetch/fetch-client.ts',
+          name: 'fetchClient',
         },
       },
     },

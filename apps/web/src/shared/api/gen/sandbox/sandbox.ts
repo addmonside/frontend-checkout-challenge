@@ -31,7 +31,7 @@ import type {
   GetSimulation200,
 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -94,9 +94,9 @@ export const getGetSandboxUrl = () => {
  * @summary Тестовые карты
  */
 export const getSandbox = async (
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getSandboxResponse> => {
-  return customFetch<getSandboxResponse>(getGetSandboxUrl(), {
+  return fetchClient<getSandboxResponse>(getGetSandboxUrl(), {
     ...options,
     method: 'GET',
   });
@@ -111,7 +111,7 @@ export const getGetSandboxQueryOptions = <
   TError = void | Def0,
 >(options?: {
   query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSandbox>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -141,7 +141,7 @@ export function useGetSandbox<TData = Awaited<ReturnType<typeof getSandbox>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -156,14 +156,14 @@ export function useGetSandbox<TData = Awaited<ReturnType<typeof getSandbox>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetSandbox<TData = Awaited<ReturnType<typeof getSandbox>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSandbox>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -174,7 +174,7 @@ export function useGetSandbox<TData = Awaited<ReturnType<typeof getSandbox>>, TE
 export function useGetSandbox<TData = Awaited<ReturnType<typeof getSandbox>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSandbox>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -274,7 +274,7 @@ export const getCreateSimulationUrl = (paymentId: string) => {
 export const createSimulation = async (
   paymentId: string,
   createSimulationBody: CreateSimulationBody,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<createSimulationResponse> => {
   const getHeaders = (
     h?: NonNullable<RequestInit['headers']>,
@@ -295,7 +295,7 @@ export const createSimulation = async (
     }
     return headers;
   };
-  return customFetch<createSimulationResponse>(getCreateSimulationUrl(paymentId), {
+  return fetchClient<createSimulationResponse>(getCreateSimulationUrl(paymentId), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
@@ -312,7 +312,7 @@ export const getCreateSimulationMutationOptions = <TError = Def0, TContext = unk
     CreateSimulationMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createSimulation>>,
   TError,
@@ -356,7 +356,7 @@ export const useCreateSimulation = <TError = Def0, TContext = unknown>(
       CreateSimulationMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
@@ -428,9 +428,9 @@ export const getGetSimulationUrl = (paymentId: string, simulationId: string) => 
 export const getSimulation = async (
   paymentId: string,
   simulationId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getSimulationResponse> => {
-  return customFetch<getSimulationResponse>(getGetSimulationUrl(paymentId, simulationId), {
+  return fetchClient<getSimulationResponse>(getGetSimulationUrl(paymentId, simulationId), {
     ...options,
     method: 'GET',
   });
@@ -448,7 +448,7 @@ export const getGetSimulationQueryOptions = <
   simulationId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSimulation>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -491,7 +491,7 @@ export function useGetSimulation<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -511,7 +511,7 @@ export function useGetSimulation<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -523,7 +523,7 @@ export function useGetSimulation<
   simulationId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSimulation>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -539,7 +539,7 @@ export function useGetSimulation<
   simulationId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSimulation>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

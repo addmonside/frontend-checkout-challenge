@@ -1,12 +1,11 @@
 import { ListProducts200 } from '@/shared/api/gen/model';
-import { serverFetch } from '@/shared/api/server-fetch';
+import { fetchServer } from '@/shared/api/fetch/fetch-server';
 
 export async function ServerCatalog() {
-  const data = await serverFetch<ListProducts200>('/api/products', {
+  const data = await fetchServer<ListProducts200>('/api/products', {
     method: 'GET',
   });
 
-  console.log(data);
   return (
     <div>
       <ul>

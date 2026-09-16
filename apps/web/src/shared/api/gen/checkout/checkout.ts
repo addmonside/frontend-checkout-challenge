@@ -29,7 +29,7 @@ import type {
   GetQuote200,
 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -102,9 +102,9 @@ export const getGetCheckoutOptionsUrl = () => {
  * @summary Способы доставки и оплаты
  */
 export const getCheckoutOptions = async (
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getCheckoutOptionsResponse> => {
-  return customFetch<getCheckoutOptionsResponse>(getGetCheckoutOptionsUrl(), {
+  return fetchClient<getCheckoutOptionsResponse>(getGetCheckoutOptionsUrl(), {
     ...options,
     method: 'GET',
   });
@@ -119,7 +119,7 @@ export const getGetCheckoutOptionsQueryOptions = <
   TError = void | Def0,
 >(options?: {
   query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCheckoutOptions>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -154,7 +154,7 @@ export function useGetCheckoutOptions<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -174,7 +174,7 @@ export function useGetCheckoutOptions<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -184,7 +184,7 @@ export function useGetCheckoutOptions<
 >(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCheckoutOptions>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -198,7 +198,7 @@ export function useGetCheckoutOptions<
 >(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCheckoutOptions>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -284,7 +284,7 @@ export const getCreateQuoteUrl = () => {
  */
 export const createQuote = async (
   createQuoteBody: CreateQuoteBody,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<createQuoteResponse> => {
   const getHeaders = (
     h?: NonNullable<RequestInit['headers']>,
@@ -305,7 +305,7 @@ export const createQuote = async (
     }
     return headers;
   };
-  return customFetch<createQuoteResponse>(getCreateQuoteUrl(), {
+  return fetchClient<createQuoteResponse>(getCreateQuoteUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
@@ -322,7 +322,7 @@ export const getCreateQuoteMutationOptions = <TError = Def0, TContext = unknown>
     CreateQuoteMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createQuote>>,
   TError,
@@ -364,7 +364,7 @@ export const useCreateQuote = <TError = Def0, TContext = unknown>(
       CreateQuoteMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
@@ -436,9 +436,9 @@ export const getGetQuoteUrl = (quoteId: string) => {
  */
 export const getQuote = async (
   quoteId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getQuoteResponse> => {
-  return customFetch<getQuoteResponse>(getGetQuoteUrl(quoteId), {
+  return fetchClient<getQuoteResponse>(getGetQuoteUrl(quoteId), {
     ...options,
     method: 'GET',
   });
@@ -455,7 +455,7 @@ export const getGetQuoteQueryOptions = <
   quoteId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getQuote>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -490,7 +490,7 @@ export function useGetQuote<TData = Awaited<ReturnType<typeof getQuote>>, TError
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -506,7 +506,7 @@ export function useGetQuote<TData = Awaited<ReturnType<typeof getQuote>>, TError
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -514,7 +514,7 @@ export function useGetQuote<TData = Awaited<ReturnType<typeof getQuote>>, TError
   quoteId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getQuote>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -526,7 +526,7 @@ export function useGetQuote<TData = Awaited<ReturnType<typeof getQuote>>, TError
   quoteId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getQuote>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

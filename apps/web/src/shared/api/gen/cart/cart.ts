@@ -30,7 +30,7 @@ import type {
   SetCartItemBody,
 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -102,9 +102,9 @@ export const getGetCartUrl = () => {
  * @summary Корзина
  */
 export const getCart = async (
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getCartResponse> => {
-  return customFetch<getCartResponse>(getGetCartUrl(), {
+  return fetchClient<getCartResponse>(getGetCartUrl(), {
     ...options,
     method: 'GET',
   });
@@ -119,7 +119,7 @@ export const getGetCartQueryOptions = <
   TError = void | Def0,
 >(options?: {
   query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCart>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -149,7 +149,7 @@ export function useGetCart<TData = Awaited<ReturnType<typeof getCart>>, TError =
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -164,14 +164,14 @@ export function useGetCart<TData = Awaited<ReturnType<typeof getCart>>, TError =
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetCart<TData = Awaited<ReturnType<typeof getCart>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCart>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -182,7 +182,7 @@ export function useGetCart<TData = Awaited<ReturnType<typeof getCart>>, TError =
 export function useGetCart<TData = Awaited<ReturnType<typeof getCart>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCart>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -255,9 +255,9 @@ export const getGetCartItemUrl = (productId: string) => {
  */
 export const getCartItem = async (
   productId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getCartItemResponse> => {
-  return customFetch<getCartItemResponse>(getGetCartItemUrl(productId), {
+  return fetchClient<getCartItemResponse>(getGetCartItemUrl(productId), {
     ...options,
     method: 'GET',
   });
@@ -274,7 +274,7 @@ export const getGetCartItemQueryOptions = <
   productId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCartItem>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -312,7 +312,7 @@ export function useGetCartItem<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -331,7 +331,7 @@ export function useGetCartItem<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -342,7 +342,7 @@ export function useGetCartItem<
   productId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCartItem>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -357,7 +357,7 @@ export function useGetCartItem<
   productId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCartItem>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -449,7 +449,7 @@ export const getSetCartItemUrl = (productId: string) => {
 export const setCartItem = async (
   productId: string,
   setCartItemBody: SetCartItemBody,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<setCartItemResponse> => {
   const getHeaders = (
     h?: NonNullable<RequestInit['headers']>,
@@ -470,7 +470,7 @@ export const setCartItem = async (
     }
     return headers;
   };
-  return customFetch<setCartItemResponse>(getSetCartItemUrl(productId), {
+  return fetchClient<setCartItemResponse>(getSetCartItemUrl(productId), {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
@@ -487,7 +487,7 @@ export const getSetCartItemMutationOptions = <TError = Def0, TContext = unknown>
     SetCartItemMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof setCartItem>>,
   TError,
@@ -529,7 +529,7 @@ export const useSetCartItem = <TError = Def0, TContext = unknown>(
       SetCartItemMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
@@ -589,9 +589,9 @@ export const getRemoveCartItemUrl = (productId: string) => {
  */
 export const removeCartItem = async (
   productId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<removeCartItemResponse> => {
-  return customFetch<removeCartItemResponse>(getRemoveCartItemUrl(productId), {
+  return fetchClient<removeCartItemResponse>(getRemoveCartItemUrl(productId), {
     ...options,
     method: 'DELETE',
   });
@@ -606,7 +606,7 @@ export const getRemoveCartItemMutationOptions = <TError = Def0, TContext = unkno
     RemoveCartItemMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof removeCartItem>>,
   TError,
@@ -648,7 +648,7 @@ export const useRemoveCartItem = <TError = Def0, TContext = unknown>(
       RemoveCartItemMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<

@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { fetchToken } from '@/shared/api';
 import { appConfig } from './shared/model';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const existing = request.cookies.get(appConfig.token.COOKIE_KEY)?.value;
   if (existing) return NextResponse.next();
 

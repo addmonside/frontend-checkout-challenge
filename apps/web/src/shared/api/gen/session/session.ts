@@ -23,7 +23,7 @@ import type {
 
 import type { CreateSession201, CreateSessionBody, Def0, GetSession200 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -96,7 +96,7 @@ export const getCreateSessionUrl = () => {
  */
 export const createSession = async (
   createSessionBody: CreateSessionBody,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<createSessionResponse> => {
   const getHeaders = (
     h?: NonNullable<RequestInit['headers']>,
@@ -117,7 +117,7 @@ export const createSession = async (
     }
     return headers;
   };
-  return customFetch<createSessionResponse>(getCreateSessionUrl(), {
+  return fetchClient<createSessionResponse>(getCreateSessionUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
@@ -134,7 +134,7 @@ export const getCreateSessionMutationOptions = <TError = Def0, TContext = unknow
     CreateSessionMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createSession>>,
   TError,
@@ -176,7 +176,7 @@ export const useCreateSession = <TError = Def0, TContext = unknown>(
       CreateSessionMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
@@ -247,9 +247,9 @@ export const getGetSessionUrl = (sessionId: string) => {
  */
 export const getSession = async (
   sessionId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getSessionResponse> => {
-  return customFetch<getSessionResponse>(getGetSessionUrl(sessionId), {
+  return fetchClient<getSessionResponse>(getGetSessionUrl(sessionId), {
     ...options,
     method: 'GET',
   });
@@ -266,7 +266,7 @@ export const getGetSessionQueryOptions = <
   sessionId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSession>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -301,7 +301,7 @@ export function useGetSession<TData = Awaited<ReturnType<typeof getSession>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -317,7 +317,7 @@ export function useGetSession<TData = Awaited<ReturnType<typeof getSession>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -325,7 +325,7 @@ export function useGetSession<TData = Awaited<ReturnType<typeof getSession>>, TE
   sessionId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSession>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -337,7 +337,7 @@ export function useGetSession<TData = Awaited<ReturnType<typeof getSession>>, TE
   sessionId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSession>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

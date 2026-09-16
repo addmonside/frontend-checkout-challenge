@@ -20,7 +20,7 @@ import type {
 
 import type { Def0, GetApi200 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -83,9 +83,9 @@ export const getGetApiUrl = () => {
  * @summary Ресурсы API
  */
 export const getApi = async (
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getApiResponse> => {
-  return customFetch<getApiResponse>(getGetApiUrl(), {
+  return fetchClient<getApiResponse>(getGetApiUrl(), {
     ...options,
     method: 'GET',
   });
@@ -100,7 +100,7 @@ export const getGetApiQueryOptions = <
   TError = void | Def0,
 >(options?: {
   query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApi>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -130,7 +130,7 @@ export function useGetApi<TData = Awaited<ReturnType<typeof getApi>>, TError = v
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -145,14 +145,14 @@ export function useGetApi<TData = Awaited<ReturnType<typeof getApi>>, TError = v
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetApi<TData = Awaited<ReturnType<typeof getApi>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApi>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -163,7 +163,7 @@ export function useGetApi<TData = Awaited<ReturnType<typeof getApi>>, TError = v
 export function useGetApi<TData = Awaited<ReturnType<typeof getApi>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApi>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

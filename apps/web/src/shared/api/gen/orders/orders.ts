@@ -30,7 +30,7 @@ import type {
   ListOrders200,
 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -127,7 +127,7 @@ export const getCreateOrderUrl = () => {
  */
 export const createOrder = async (
   createOrderBody: CreateOrderBody,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<createOrderResponse> => {
   const getHeaders = (
     h?: NonNullable<RequestInit['headers']>,
@@ -148,7 +148,7 @@ export const createOrder = async (
     }
     return headers;
   };
-  return customFetch<createOrderResponse>(getCreateOrderUrl(), {
+  return fetchClient<createOrderResponse>(getCreateOrderUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
@@ -165,7 +165,7 @@ export const getCreateOrderMutationOptions = <TError = Def0, TContext = unknown>
     CreateOrderMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createOrder>>,
   TError,
@@ -207,7 +207,7 @@ export const useCreateOrder = <TError = Def0, TContext = unknown>(
       CreateOrderMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
@@ -272,9 +272,9 @@ export const getListOrdersUrl = () => {
  * @summary Заказы сессии
  */
 export const listOrders = async (
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<listOrdersResponse> => {
-  return customFetch<listOrdersResponse>(getListOrdersUrl(), {
+  return fetchClient<listOrdersResponse>(getListOrdersUrl(), {
     ...options,
     method: 'GET',
   });
@@ -289,7 +289,7 @@ export const getListOrdersQueryOptions = <
   TError = void | Def0,
 >(options?: {
   query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listOrders>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
@@ -319,7 +319,7 @@ export function useListOrders<TData = Awaited<ReturnType<typeof listOrders>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -334,14 +334,14 @@ export function useListOrders<TData = Awaited<ReturnType<typeof listOrders>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListOrders<TData = Awaited<ReturnType<typeof listOrders>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listOrders>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -352,7 +352,7 @@ export function useListOrders<TData = Awaited<ReturnType<typeof listOrders>>, TE
 export function useListOrders<TData = Awaited<ReturnType<typeof listOrders>>, TError = void | Def0>(
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listOrders>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -426,9 +426,9 @@ export const getGetOrderUrl = (orderId: string) => {
  */
 export const getOrder = async (
   orderId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getOrderResponse> => {
-  return customFetch<getOrderResponse>(getGetOrderUrl(orderId), {
+  return fetchClient<getOrderResponse>(getGetOrderUrl(orderId), {
     ...options,
     method: 'GET',
   });
@@ -445,7 +445,7 @@ export const getGetOrderQueryOptions = <
   orderId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrder>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -480,7 +480,7 @@ export function useGetOrder<TData = Awaited<ReturnType<typeof getOrder>>, TError
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -496,7 +496,7 @@ export function useGetOrder<TData = Awaited<ReturnType<typeof getOrder>>, TError
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -504,7 +504,7 @@ export function useGetOrder<TData = Awaited<ReturnType<typeof getOrder>>, TError
   orderId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrder>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -516,7 +516,7 @@ export function useGetOrder<TData = Awaited<ReturnType<typeof getOrder>>, TError
   orderId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getOrder>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

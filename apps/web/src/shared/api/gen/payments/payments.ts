@@ -30,7 +30,7 @@ import type {
   ListPayments200,
 } from '../model';
 
-import { customFetch } from '../../client-fetch';
+import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
@@ -110,9 +110,9 @@ export const getListPaymentsUrl = (orderId: string) => {
  */
 export const listPayments = async (
   orderId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<listPaymentsResponse> => {
-  return customFetch<listPaymentsResponse>(getListPaymentsUrl(orderId), {
+  return fetchClient<listPaymentsResponse>(getListPaymentsUrl(orderId), {
     ...options,
     method: 'GET',
   });
@@ -129,7 +129,7 @@ export const getListPaymentsQueryOptions = <
   orderId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPayments>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -167,7 +167,7 @@ export function useListPayments<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -186,7 +186,7 @@ export function useListPayments<
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -197,7 +197,7 @@ export function useListPayments<
   orderId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPayments>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -212,7 +212,7 @@ export function useListPayments<
   orderId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPayments>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -304,7 +304,7 @@ export const getCreatePaymentUrl = (orderId: string) => {
 export const createPayment = async (
   orderId: string,
   createPaymentBody: CreatePaymentBody,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<createPaymentResponse> => {
   const getHeaders = (
     h?: NonNullable<RequestInit['headers']>,
@@ -325,7 +325,7 @@ export const createPayment = async (
     }
     return headers;
   };
-  return customFetch<createPaymentResponse>(getCreatePaymentUrl(orderId), {
+  return fetchClient<createPaymentResponse>(getCreatePaymentUrl(orderId), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
@@ -342,7 +342,7 @@ export const getCreatePaymentMutationOptions = <TError = Def0, TContext = unknow
     CreatePaymentMutationVariables,
     TContext
   >;
-  request?: SecondParameter<typeof customFetch>;
+  request?: SecondParameter<typeof fetchClient>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createPayment>>,
   TError,
@@ -384,7 +384,7 @@ export const useCreatePayment = <TError = Def0, TContext = unknown>(
       CreatePaymentMutationVariables,
       TContext
     >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
@@ -456,9 +456,9 @@ export const getGetPaymentUrl = (paymentId: string) => {
  */
 export const getPayment = async (
   paymentId: string,
-  options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof fetchClient>[1],
 ): Promise<getPaymentResponse> => {
-  return customFetch<getPaymentResponse>(getGetPaymentUrl(paymentId), {
+  return fetchClient<getPaymentResponse>(getGetPaymentUrl(paymentId), {
     ...options,
     method: 'GET',
   });
@@ -475,7 +475,7 @@ export const getGetPaymentQueryOptions = <
   paymentId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getPayment>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
@@ -510,7 +510,7 @@ export function useGetPayment<TData = Awaited<ReturnType<typeof getPayment>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -526,7 +526,7 @@ export function useGetPayment<TData = Awaited<ReturnType<typeof getPayment>>, TE
         >,
         'initialData'
       >;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -534,7 +534,7 @@ export function useGetPayment<TData = Awaited<ReturnType<typeof getPayment>>, TE
   paymentId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getPayment>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
@@ -546,7 +546,7 @@ export function useGetPayment<TData = Awaited<ReturnType<typeof getPayment>>, TE
   paymentId: string,
   options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getPayment>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
+    request?: SecondParameter<typeof fetchClient>;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
