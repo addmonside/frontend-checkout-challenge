@@ -1,10 +1,10 @@
 import { Logo } from '@/shared/ui/logo';
-import { SessionBoundary } from './session-boundary';
+import { WidthBoundary } from '@/shared/ui/width-boundary';
 import { Cart } from '@/services/cart';
 
 export function SessionHeader() {
   return (
-    <SessionBoundary
+    <WidthBoundary
       as="header"
       className="h-14 flex items-center justify-between"
       data-slot="session-header"
@@ -13,6 +13,6 @@ export function SessionHeader() {
       <div>
         <Cart />
       </div>
-    </SessionBoundary>
+    </WidthBoundary>
   );
 }

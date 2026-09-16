@@ -1,10 +1,10 @@
 import { LucideCopyright } from 'lucide-react';
-import { SessionBoundary } from './session-boundary';
+import { WidthBoundary } from '@/shared/ui/width-boundary';
 import { Logo } from '@/shared/ui/logo';
 
 export function SessionFooter() {
   return (
-    <SessionBoundary
+    <WidthBoundary
       as="footer"
       className="flex flex-col items-center justify-center gap-1 *:[p]:text-md pt-4 pb-6"
       data-slot="session-footer"
@@ -13,6 +13,6 @@ export function SessionFooter() {
       <p className="flex items-center gap-2">
         <LucideCopyright size={18} /> 2026
       </p>
-    </SessionBoundary>
+    </WidthBoundary>
   );
 }

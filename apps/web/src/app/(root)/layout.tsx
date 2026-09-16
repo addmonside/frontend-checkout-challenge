@@ -1,4 +1,4 @@
-import { SessionHeader, SessionFooter, SessionBoundary } from '@/features/session';
+import { SessionHeader, SessionFooter } from '@/features/session';
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
@@ -7,9 +7,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
       data-slot="root-layout"
     >
       <SessionHeader />
-      <SessionBoundary as="main" className="flex-1">
-        {children}
-      </SessionBoundary>
+      {children}
       <SessionFooter />
     </section>
   );

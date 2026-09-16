@@ -1,6 +1,6 @@
 import { cn } from 'cn';
 
-export function SessionBoundary<T extends React.ElementType = 'div'>({
+export function Skeleton<T extends React.ElementType = 'div'>({
   className,
   as,
   ...props
@@ -10,8 +10,8 @@ export function SessionBoundary<T extends React.ElementType = 'div'>({
   const Component = as || 'div';
   return (
     <Component
-      data-slot="session-boundary"
-      className={cn('px-6 max-w-7xl self-center', className)}
+      data-slot="skeleton"
+      className={cn('animate-pulse rounded-md bg-muted', className)}
       {...props}
     />
   );
