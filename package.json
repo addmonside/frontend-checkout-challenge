@@ -24,8 +24,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "docker-up": "docker compose up -d",
-    "docker-build": "docker compose up -d --build",
-    "docker-down": "docker compose down"
+    "docker-rebuild": "docker compose down -v && docker compose up -d --build",
+    "docker-down": "docker compose down",
+    "gen:api": "npm run gen:api -w @checkout/web"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "13.0.0",
