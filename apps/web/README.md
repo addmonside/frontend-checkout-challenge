@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# frontend-checkout-challenge
 
-## Getting Started
+## Что реализовано
 
-First, run the development server:
+---
+
+## Trade-offs: Архитектурные решения проекта
+
+### SPA or Framework with SSR
+
+Выбор сделан в пользу Next.js (SSR/SSG), так как это интернет-магазин, где критичны SEO и скорость первой отдачи контента.
+
+_Жертвуем:_ простотой архитектуры и деплоя (нужен сервер/edge-рантайм, а не просто статика), усложнением стейт-менеджмента между сервером и клиентом
+
+_Получаем:_ индексацию контента поисковиками (карточки товаров, категории попадают в выдачу), быстрый первый рендер (пользователь видит контент до загрузки и выполнения JS), корректные превью при шеринге ссылок в соцсетях/мессенджерах (Open Graph), лучшие Core Web Vitals → выше позиции в поиске и эффективнее реклама
+
+### Default or FSD or ED
+
+Выбран ED (Evolution Design) — архитектура, основанная на модулях и гибких слоях, без избыточной жёсткости FSD.
+
+Жертвуем: Огромным сообществом и готовыми примерами FSD, привычной структурой со слоями pages/widgets/entities, строгими ограничениями, которые дисциплинируют команду Получаем: Гибкость (можно начинать с одного файла и усложнять модуль по мере роста), отсутствие оверхед-абстракций на старте, явное разделение на features (основная логика) и services (переиспользуемые бизнес-модули), возможность хранить бизнес-логику в shared (в отличие от FSD), поддержку подмодулей и групп, 4 готовые модификации (от small до monorepo)
+
+---
+
+## Использование ИИ
+
+ИИ-инструменты использовались как ассистент для:
+
+- настройке докера
+- генерации шаблона для некоторых компонентов
+- проверки и перевода в readme на человеческий
+- решения непонятных ошибок
+
+---
+
+## Быстрый старт
+
+Установка зависимостей и запуск
+
+```bash
+npm install
+npm run dev
+```
+
+Открой [http://localhost:3000](http://localhost:3000) для просмотра результата.
+
+---
+
+## Скрипты
+
+Запуск разработки
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Сборка проекта
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Старт сервера
 
-## Learn More
+```bash
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+Проверка и автофикс кода
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Генерация типов и хуков из схемы
 
-## Deploy on Vercel
+```bash
+npm run gen:api
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Навигация по проекту
+
+```
+src/
+├── app/         — страницы, слои и провайдеры
+├── features/    — крупные куски функциональности проекта
+├── services/    — код, который используется в нескольких фитчах
+├── shared/      — утилиты, глобальный UI-kit, темы, конфиги
+```
+
+### Что можно, а что не стоит делать
+
+|                | 🟢 Можно                                                      | 🔴 Лучше не стоит                   |
+| -------------- | ------------------------------------------------------------- | ----------------------------------- |
+| `app`          | добавлять провайдеры, лейауты и страницы                      | создавть компоненты                 |
+| `features/*`   | добавлять фичи                                                | делать перекрессные ссылки          |
+| `services/*`   | виджеты и фитчи, которые используются в нескольких фитчах     |                                     |
+| `shared/model` | добавлять общие типы, конфиги и логику уникальную для проекта | добалять компоненты                 |
+| `shared/ui`    | добавлять ui-kit компоненты                                   | добавлять что-то помимо компонентов |
+
+---
+
+### О чём помнить при разработке
+
+- Один файл — один именованный экспорт компонента (исключая составные компоненты)
+- Aliases обязательны для всех файлов с расширением .tsx, никакого `../../../../`
+- index.ts — только для реэкспорта
+- Все хуки именуются как `useSomething`
+- Все стили — через app/index.css, Tailwind
+- Строгий ESLint . Все автофиксы можно прогнать через `npm run lint`
+- SVG иконки кладём в папку `shared/assets/...`
+- Используй clsx для динамических вариантов
+- Не забывать про public api
+
+---
+
+### Алиасы:
+
+- `@` → `src/`
+
+## Формат коммитов
+
+Формат:
+
+```text
+type(feature): description
+```
+
+- _type_ - представляет собой символ
+  - "+" - новая задача
+  - "=" - правка
+  - "~" - минорное изменение, на которое можно не обращать внимания
+- _feature_ - название функциональности, в которой было произведлено изменение, по сути, жто имя папки в фитчах или shared
+- _description_ - описане решенной проблемы
+
+Примеры:
+
+- `+ auth: добавлена страница логина`
+- `= auth: ошибки валидации не отображались`
+- `~ kit: добавлены компоненты конпки и поля`
+
+---
+
+## Что внутри
+
+- [evolution design](https://ed.evocomm.space/guide/) — методология архитектуры фронта
+
+- [Next.js](https://nextjs.org/) — Next.js
+- [typescript](https://www.typescriptlang.org/) — строгая типизация
+- [tailwindcss](https://tailwindcss.com/) — утилитарный CSS
+- [tan stack query](https://tanstack.com/query/latest/) — работа с запросами
+- [ShadCN](https://ui.shadcn.com/) — библиотека компонентов
+
+- [eslint](https://eslint.org/) — линтер JS/TS-кода
