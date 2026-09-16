@@ -1,8 +1,16 @@
+import { SessionHeader, SessionFooter, SessionBoundary } from '@/features/session';
+
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <section className="grid min-h-svh w-full justify-items-center" data-slot="root-layout">
-      i am root layout
-      <main>{children}</main>
+    <section
+      className="flex flex-col min-h-svh w-full items-center *:w-full"
+      data-slot="root-layout"
+    >
+      <SessionHeader />
+      <SessionBoundary as="main" className="flex-1">
+        {children}
+      </SessionBoundary>
+      <SessionFooter />
     </section>
   );
 }

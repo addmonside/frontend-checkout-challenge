@@ -1,7 +1,5 @@
-import { Geist, Geist_Mono, Nunito_Sans } from 'next/font/google';
-import { cn } from '@/shared/lib/cn';
-
-const nunitoSansHeading = Nunito_Sans({ subsets: ['latin'], variable: '--font-heading' });
+import { Geist, Geist_Mono } from 'next/font/google';
+import { cn } from 'cn';
 
 const geistSans = Geist({
   variable: '--font-sans',
@@ -16,6 +14,6 @@ const geistMono = Geist_Mono({
 });
 
 export const font = {
-  variable: cn(nunitoSansHeading.variable, geistSans.variable, geistMono.variable, 'antialiased'),
+  variable: cn(geistSans.variable, geistMono.variable, 'antialiased'),
   className: cn(geistSans.className),
 };
