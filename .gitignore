@@ -27,3 +27,8 @@ dist/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ai
+/.opencode
+.agents
+AGENTS.md
