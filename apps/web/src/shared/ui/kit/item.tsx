@@ -63,6 +63,8 @@ const itemVariants = cva(
           '*:data-[slot=item-content]:basis-full',
         ),
         'cart-item': cn('flex items-center font-semibold'),
+        'checkout-toggle-item':
+          'flex items-center font-semibold p-3 *:data-[slot=item-content]:items-center w-full rounded-lg',
       },
     },
     defaultVariants: {
@@ -161,7 +163,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot="item-description"
       className={cn(
-        'line-clamp-2 text-left text-sm leading-normal font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary',
+        'line-clamp-2 text-left text-sm leading-normal font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary inline-flex gap-2',
         className,
       )}
       {...props}

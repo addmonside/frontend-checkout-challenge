@@ -15,8 +15,6 @@ export function CartAdditionButton({ productId, stock }: { productId: string; st
   const handleChange = (q: number) => addToCart(productId, q);
   const handleRemove = () => removeCartItem(productId);
 
-  console.log(isPending, isPendingRemove);
-
   return !!item?.quantity ? (
     <QuantityButton
       value={item.quantity}

@@ -1,43 +1,24 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { getGetCartQueryKey, useRemoveCartItem } from '@/shared/api';
-import type { GetCart200 } from '@/shared/api/gen/model/getCart200';
+import { useRemoveCartItem } from '@/shared/api';
+import {
+  invalidateCartQueries,
+  optimisticUpdateCart,
+  removeCartItemByProductId,
+  rollbackOptimisticCart,
+} from './cart-optimistic';
 
 export function useRemoveFromCart() {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useRemoveCartItem({
     mutation: {
-      onMutate: async ({ productId }) => {
-        const queryKey = getGetCartQueryKey();
-        await queryClient.cancelQueries({ queryKey });
-        const previous = queryClient.getQueryData<GetCart200>(queryKey);
-        if (!previous) return { previous };
-        const cart = previous.data;
-
-        const existing = cart.items.find((item) => item.productId === productId);
-        if (!existing) return { previous };
-
-        const items = cart.items.filter((item) => item.productId !== productId);
-
-        queryClient.setQueryData<GetCart200>(queryKey, {
-          ...previous,
-          data: {
-            ...cart,
-            items,
-            quantity: items.reduce((sum, item) => sum + item.quantity, 0),
-            subtotal: items.reduce((sum, item) => sum + item.lineTotal, 0),
-          },
-        });
-
-        return { previous };
-      },
+      onMutate: ({ productId }) =>
+        optimisticUpdateCart(queryClient, (items) => removeCartItemByProductId(items, productId)),
       onError: (_error, _variables, context) => {
-        if (context?.previous) {
-          queryClient.setQueryData(getGetCartQueryKey(), context.previous);
+        if (context) {
+          rollbackOptimisticCart(queryClient, context);
         }
       },
-      onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: getGetCartQueryKey() });
-      },
+      onSettled: () => invalidateCartQueries(queryClient),
     },
   });
 
