@@ -12,14 +12,14 @@ import { Price } from '@/shared/ui/price';
 import { LucideShoppingBag } from 'lucide-react';
 
 export function ProductListItem({
-  id,
+  productId,
   title,
   description,
   price,
   stock,
   currency,
 }: {
-  id: string;
+  productId: string;
   title: string;
   description: string;
   price: number;
@@ -27,9 +27,9 @@ export function ProductListItem({
   currency: string;
 }) {
   return (
-    <Item variant="product">
-      <ItemMedia className="">
-        <LucideShoppingBag className="text-muted-foreground" />
+    <Item variant="product-item" as="li">
+      <ItemMedia>
+        <LucideShoppingBag />
       </ItemMedia>
       <ItemContent>
         <ItemTitle as="h3">{title}</ItemTitle>
@@ -40,11 +40,13 @@ export function ProductListItem({
           <>
             <Price value={price} currency={currency} />
             <ItemActions>
-              <CartAdditionButton productId={id} />
+              <CartAdditionButton productId={productId} stock={stock} />
             </ItemActions>
           </>
         ) : (
-          <p className="w-full text-center">Нет в наличии</p>
+          <ItemTitle as="em" className="w-full text-center">
+            Нет в наличии
+          </ItemTitle>
         )}
       </ItemFooter>
     </Item>

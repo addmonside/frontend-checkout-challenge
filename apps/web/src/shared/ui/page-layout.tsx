@@ -50,7 +50,7 @@ const PageLayoutTitle = ({
 function PageLayoutHeader({ className, ...props }: React.ComponentProps<'header'> & {}) {
   return (
     <header
-      data-slot="page-layout-toolbar"
+      data-slot="page-layout-header"
       className={cn(
         'bg-background sticky top-0 z-10 flex flex-col gap-8 justify-center h-14 pb-1',
         className,
@@ -94,7 +94,7 @@ function PageLayoutContent<T extends React.ElementType = 'div'>({
 
 function PageLayoutError({ error }: { error: { message: string } | null | undefined }) {
   return (
-    <PageLayoutContent>
+    <PageLayoutContent data-slot="page-layout-error">
       <Alert variant="destructive">
         <LucideInfo />
         <AlertDescription>{error?.message}</AlertDescription>
@@ -115,7 +115,7 @@ function PageLayoutEmpty({
   content?: ReactNode;
 }) {
   return (
-    <PageLayoutContent variant="centered">
+    <PageLayoutContent variant="centered" data-slot="page-layout-empty">
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">{media ?? <LucideInfo />}</EmptyMedia>

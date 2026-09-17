@@ -7,16 +7,11 @@ export async function fetchBase(
   apiUrl?: string,
 ): Promise<Response> {
   const url = `${apiUrl ?? appConfig.api.URL}${uri}`;
-  const headers = token
-    ? {
-        'Content-Type': 'application/json',
-        ...options.headers,
-        Authorization: `Bearer ${token}`,
-      }
-    : {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      };
+  const headers = {
+    ...(options.body != null ? { 'Content-Type': 'application/json' } : {}),
+    ...options.headers,
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
 
   return await fetch(url, {
     ...options,

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { font } from '@/shared/assets/fonts';
 import './globals.css';
 import { Providers } from './(providers)/providers';
+import { Toaster } from '@/shared/ui/kit/toast';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,6 +14,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
     <html lang="ru" className={font.variable}>
       <body>
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );

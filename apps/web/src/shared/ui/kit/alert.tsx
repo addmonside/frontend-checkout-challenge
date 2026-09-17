@@ -25,7 +25,8 @@ function Alert<T extends React.ElementType = 'div'>({
   ...props
 }: {
   as?: T;
-} & Omit<React.ComponentProps<T>, 'as'> & VariantProps<typeof alertVariants>) {
+} & Omit<React.ComponentProps<T>, 'as'> &
+  VariantProps<typeof alertVariants>) {
   const Component = as || 'div';
   return (
     <Component

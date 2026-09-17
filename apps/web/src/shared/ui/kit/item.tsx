@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { mergeProps } from '@base-ui/react/merge-props';
-import { useRender } from '@base-ui/react/use-render';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 
@@ -38,12 +36,13 @@ const itemVariants = cva(
       variant: {
         default:
           'border-transparent flex w-full items-center rounded-lg border gap-2.5 px-3 py-2.5',
-        product: cn(
+        'product-item': cn(
           'flex flex-col border-transparent bg-muted/10 gap-3 p-2 hover:bg-muted/40 rounded-2xl transition-colors items-stretch',
-          '*:data-[slot=item-media]:flex *:data-[slot=item-media]:items-center *:data-[slot=item-media]:justify-center *:data-[slot=item-media]:h-36 *:data-[slot=item-media]:w-full *:data-[slot=item-media]:rounded-lg *:data-[slot=item-media]:bg-muted/50 *:data-[slot=item-media]:[&_svg]:size-12 ',
+          '*:data-[slot=item-media]:flex *:data-[slot=item-media]:items-center *:data-[slot=item-media]:justify-center *:data-[slot=item-media]:h-36 *:data-[slot=item-media]:w-full *:data-[slot=item-media]:rounded-lg *:data-[slot=item-media]:bg-muted/50 *:data-[slot=item-media]:[&_svg]:size-12 *:data-[slot=item-media]:[&_svg]:text-muted-foreground',
           '*:data-[slot=item-footer]:min-h-8 ',
           '*:data-[slot=item-content]:basis-full',
         ),
+        'cart-item': cn('flex items-center font-semibold'),
       },
     },
     defaultVariants: {
@@ -52,26 +51,24 @@ const itemVariants = cva(
   },
 );
 
-function Item({
+function Item<T extends React.ElementType = 'section'>({
   className,
   variant = 'default',
-  render,
+  as,
   ...props
-}: useRender.ComponentProps<'div'> & VariantProps<typeof itemVariants>) {
-  return useRender({
-    defaultTagName: 'div',
-    props: mergeProps<'div'>(
-      {
-        className: cn(itemVariants({ variant, className })),
-      },
-      props,
-    ),
-    render,
-    state: {
-      slot: 'item',
-      variant,
-    },
-  });
+}: {
+  as?: T;
+} & Omit<React.ComponentProps<T>, 'as' | 'className'> &
+  VariantProps<typeof itemVariants>) {
+  const Component = as || 'section';
+  return (
+    <Component
+      data-slot="item"
+      data-variant={variant}
+      className={cn(itemVariants({ variant, className: className as string }))}
+      {...props}
+    />
+  );
 }
 
 const itemMediaVariants = cva(
@@ -158,9 +155,9 @@ function ItemActions({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function ItemHeader({ className, ...props }: React.ComponentProps<'div'>) {
+function ItemHeader({ className, ...props }: React.ComponentProps<'header'>) {
   return (
-    <div
+    <header
       data-slot="item-header"
       className={cn('flex basis-full items-center justify-between gap-2', className)}
       {...props}
@@ -168,9 +165,9 @@ function ItemHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function ItemFooter({ className, ...props }: React.ComponentProps<'div'>) {
+function ItemFooter({ className, ...props }: React.ComponentProps<'footer'>) {
   return (
-    <div
+    <footer
       data-slot="item-footer"
       className={cn('flex items-center justify-between gap-2', className)}
       {...props}

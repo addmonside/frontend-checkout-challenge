@@ -1,2 +1,2 @@
-export * from './cart';
-export * from './cart-addition-button';
+export * from './ui/cart';
+export * from './ui/cart-addition-button';

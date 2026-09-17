@@ -10,7 +10,7 @@ export function WidthBoundary<T extends React.ElementType = 'div'>({
   const Component = as || 'div';
   return (
     <Component
-      data-slot="session-boundary"
+      data-slot="width-boundary"
       className={cn('px-6 max-w-7xl self-center', className)}
       {...props}
     />

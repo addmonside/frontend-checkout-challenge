@@ -1,11 +1,7 @@
 import { QueryClient, QueryCache, MutationCache } from '@tanstack/react-query';
 import { ApiError } from '@/shared/api';
 import { humanizeApiError } from '@/shared/model';
-
-// todo: временная заглушка, пока нет ui !!!
-const toast = {
-  error: (message: string) => console.info('toast: ', message),
-};
+import { toast } from '@/shared/ui/kit/toast';
 
 declare module '@tanstack/react-query' {
   interface Register {
@@ -18,20 +14,6 @@ declare module '@tanstack/react-query' {
       errorMessages?: Partial<Record<string, string>>;
     };
   }
-}
-
-function reportError(
-  error: unknown,
-  meta?: { suppressErrorToast?: boolean; errorMessages?: Partial<Record<string, string>> },
-) {
-  if (meta?.suppressErrorToast) return;
-
-  if (error instanceof ApiError) {
-    toast.error(humanizeApiError(error, meta?.errorMessages));
-    return;
-  }
-
-  toast.error('Проблема с сетью, попробуйте ещё раз');
 }
 
 export function createQueryClient() {
@@ -50,5 +32,27 @@ export function createQueryClient() {
     mutationCache: new MutationCache({
       onError: (error, _vars, _ctx, mutation) => reportError(error, mutation.meta),
     }),
+  });
+}
+
+function reportError(
+  error: unknown,
+  meta?: { suppressErrorToast?: boolean; errorMessages?: Partial<Record<string, string>> },
+) {
+  if (meta?.suppressErrorToast) return;
+
+  if (error instanceof ApiError) {
+    setError(humanizeApiError(error, meta?.errorMessages));
+    return;
+  }
+
+  setError('Проблема с сетью, попробуйте ещё раз');
+}
+
+function setError(description: string) {
+  toast.add({
+    type: 'error',
+    description,
+    priority: 'high',
   });
 }

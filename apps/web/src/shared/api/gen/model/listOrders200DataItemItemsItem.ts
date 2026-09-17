@@ -32,4 +32,9 @@ export type ListOrders200DataItemItemsItem = {
    * @minimum 0
    */
   readonly lineTotal: number;
+  /**
+   * Лимит количества в одной корзине; учебный остаток.
+   * @minimum 0
+   */
+  readonly stock: number;
 };

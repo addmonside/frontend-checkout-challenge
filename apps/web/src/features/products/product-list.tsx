@@ -19,7 +19,7 @@ export async function ProductList({ token }: { token: string }) {
       {data.data.map((product) => (
         <ProductListItem
           key={product.id}
-          id={product.id}
+          productId={product.id}
           title={product.title}
           price={product.price}
           description={product.description}
