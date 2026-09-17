@@ -1,4 +1,3 @@
-import { Button } from '@/shared/ui/kit/button';
 import {
   Empty,
   EmptyContent,
@@ -7,10 +6,9 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/shared/ui/kit/empty';
-import { SheetClose } from '@/shared/ui/kit/sheet';
 import { LucideShoppingBasket } from 'lucide-react';
 
-export function CartEmpty() {
+export function CartEmpty({ renderAction }: { renderAction?: React.ReactNode }) {
   return (
     <Empty>
       <EmptyHeader>
@@ -20,9 +18,7 @@ export function CartEmpty() {
         <EmptyTitle>Выша корзина пуста</EmptyTitle>
         <EmptyDescription>Добавьте товары, чтобы оформить заказ.</EmptyDescription>
       </EmptyHeader>
-      <EmptyContent className="flex-row justify-center gap-2">
-        <SheetClose render={<Button variant="outline">Закрыть</Button>} />
-      </EmptyContent>
+      <EmptyContent>{renderAction}</EmptyContent>
     </Empty>
   );
 }

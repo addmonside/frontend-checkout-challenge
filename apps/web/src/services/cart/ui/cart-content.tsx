@@ -1,6 +1,12 @@
 'use client';
 
-import { SheetClose, SheetFooter, SheetHeader, SheetTitle } from '@/shared/ui/kit/sheet';
+import {
+  SheetClose,
+  SheetContentContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from '@/shared/ui/kit/sheet';
 import { Button } from '@/shared/ui/kit/button';
 import { Price } from '@/shared/ui/price';
 import { CartList } from './cart-list';
@@ -20,7 +26,9 @@ export function CartContent({
       <SheetHeader>
         <SheetTitle>Корзина</SheetTitle>
       </SheetHeader>
-      <CartList items={items} currency={currency} />
+      <SheetContentContent>
+        <CartList items={items} currency={currency} />
+      </SheetContentContent>
       <SheetFooter>
         <p className="flex justify-between w-full">
           <em className="">Итого</em>

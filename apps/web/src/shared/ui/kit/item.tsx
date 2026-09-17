@@ -4,15 +4,35 @@ import { cn } from 'cn';
 
 import { Separator } from '@/shared/ui/kit/separator';
 
-function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
+const itemGroupVariants = cva('group/item-group w-full', {
+  variants: {
+    variant: {
+      default: 'flex flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2',
+      'product-list':
+        'grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] grid-rows-[max-content] gap-x-6 gap-y-10 max-[23.75rem]:grid-cols-1',
+      'cart-list': 'flex flex-col gap-2',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+function ItemGroup<T extends React.ElementType = 'div'>({
+  className,
+  variant = 'default',
+  as,
+  ...props
+}: {
+  as?: T;
+} & Omit<React.ComponentProps<T>, 'as' | 'className'> &
+  VariantProps<typeof itemGroupVariants>) {
+  const Component = as || 'div';
   return (
-    <div
+    <Component
       role="list"
       data-slot="item-group"
-      className={cn(
-        'group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2',
-        className,
-      )}
+      className={cn(itemGroupVariants({ variant, className }))}
       {...props}
     />
   );
@@ -65,7 +85,7 @@ function Item<T extends React.ElementType = 'section'>({
     <Component
       data-slot="item"
       data-variant={variant}
-      className={cn(itemVariants({ variant, className: className as string }))}
+      className={cn(itemVariants({ variant, className }))}
       {...props}
     />
   );

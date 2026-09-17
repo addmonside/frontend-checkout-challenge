@@ -1,6 +1,6 @@
 import { GetCart200DataItemsItem } from '@/shared/api/gen/model';
 import { CartListItem } from './cart-list-item';
-import { SheetContentContent } from '@/shared/ui/kit/sheet';
+import { ItemGroup } from '@/shared/ui/kit/item';
 
 export function CartList({
   items,
@@ -10,7 +10,7 @@ export function CartList({
   currency: string;
 }) {
   return (
-    <SheetContentContent as="ul" className="flex flex-col gap-2">
+    <ItemGroup as="ul" variant="cart-list">
       {items.map((item) => (
         <CartListItem
           key={item.productId}
@@ -23,6 +23,6 @@ export function CartList({
           stock={item.stock}
         />
       ))}
-    </SheetContentContent>
+    </ItemGroup>
   );
 }

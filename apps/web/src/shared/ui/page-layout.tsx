@@ -64,7 +64,6 @@ const pageLayoutContentVariants = cva('', {
   variants: {
     variant: {
       default: 'flex flex-col gap-12',
-      grid: 'grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] grid-rows-[max-content] gap-x-6 gap-y-10 max-[23.75rem]:grid-cols-1',
       centered: 'flex flex-col gap-12 items-center justify-center flex-1',
     },
   },

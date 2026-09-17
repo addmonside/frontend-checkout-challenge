@@ -6,6 +6,7 @@ import { PageLayout } from '@/shared/ui/page-layout';
 import { cacheLife } from 'next/cache';
 import { ProductListItem } from './product-list-item';
 import { LucideShoppingBag } from 'lucide-react';
+import { ItemGroup } from '@/shared/ui/kit/item';
 
 export async function ProductList({ token }: { token: string }) {
   cacheLife('minutes');
@@ -15,7 +16,7 @@ export async function ProductList({ token }: { token: string }) {
   });
 
   return !!data.data.length ? (
-    <PageLayout.Content as="ul" variant="grid">
+    <ItemGroup variant="product-list" as="ul">
       {data.data.map((product) => (
         <ProductListItem
           key={product.id}
@@ -27,7 +28,7 @@ export async function ProductList({ token }: { token: string }) {
           currency={product.currency}
         />
       ))}
-    </PageLayout.Content>
+    </ItemGroup>
   ) : (
     <PageLayout.Empty
       title="Нет доступных товаров"

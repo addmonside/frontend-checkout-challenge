@@ -8,14 +8,17 @@ export async function ProductListBoundary() {
 
   return (
     <>
-      {!token && (
+      {!token ? (
         <PageLayout.Empty
           title="Авторизуйтесь"
           description="Для просмотра товаров авторизуйтесь"
           media={<LucideUser />}
         />
+      ) : (
+        <PageLayout.Content>
+          <ProductList token={token} />
+        </PageLayout.Content>
       )}
-      <ProductList token={token} />
     </>
   );
 }
