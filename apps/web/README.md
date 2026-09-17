@@ -151,7 +151,9 @@ type(feature): description
 - [Next.js](https://nextjs.org/) — Next.js
 - [typescript](https://www.typescriptlang.org/) — строгая типизация
 - [tailwindcss](https://tailwindcss.com/) — утилитарный CSS
+- [orval](https://orval.dev/) — генератор типов для API
 - [tan stack query](https://tanstack.com/query/latest/) — работа с запросами
 - [ShadCN](https://ui.shadcn.com/) — библиотека компонентов
+- [jotai](https://jotai.org/) — менеджер состояния
 
 - [eslint](https://eslint.org/) — линтер JS/TS-кода

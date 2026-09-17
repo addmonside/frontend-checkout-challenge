@@ -1,4 +1,4 @@
-import { Checkout } from '@/features/checkout/checkout';
+import { Checkout } from '@/features/checkout';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
