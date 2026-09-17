@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Оформление заказа',
 };
 
-export default function Home() {
+export default function CheckoutPage() {
   return (
     <PageLayout>
       <PageLayout.Header>
