@@ -2,6 +2,7 @@
 
 import { MinusIcon, PlusIcon, Trash2Icon } from 'lucide-react';
 import { Button } from './kit/button';
+import { ItemTitle } from './kit/item';
 
 export const QuantityButton = ({
   value,
@@ -37,6 +38,7 @@ export const QuantityButton = ({
         {value > 1 ? <MinusIcon /> : <Trash2Icon />}
         <span className="hidden">{value > 1 ? 'Уменьшить на 1' : 'Удалить'}</span>
       </Button>
+      <ItemTitle>{value}</ItemTitle>
       <Button
         className="w-8"
         variant="outline"
