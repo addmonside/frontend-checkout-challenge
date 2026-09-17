@@ -15,6 +15,7 @@ const buttonVariants = cva(
           'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40',
         'header-icon-ghost':
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50  size-12 [&_svg:not([class*='size-'])]:size-8",
+        clear: '',
       },
     },
     defaultVariants: {
@@ -22,6 +23,21 @@ const buttonVariants = cva(
     },
   },
 );
+
+function buttonClassName({
+  variant,
+  className,
+  isPending,
+}: VariantProps<typeof buttonVariants> & {
+  className?: ButtonPrimitive.Props['className'];
+  isPending?: boolean;
+}) {
+  const resolvedClassName = typeof className === 'function' ? undefined : className;
+  return cn(
+    buttonVariants({ variant, className: resolvedClassName }),
+    isPending && 'opacity-90 pointer-events-none',
+  );
+}
 
 function Button({
   className,
@@ -33,10 +49,7 @@ function Button({
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(
-        buttonVariants({ variant, className }),
-        isPending && 'opacity-90 pointer-events-none',
-      )}
+      className={buttonClassName({ variant, className, isPending })}
       {...props}
     >
       {isPending ? <Spinner /> : children}
@@ -44,4 +57,4 @@ function Button({
   );
 }
 
-export { Button, buttonVariants };
+export { Button, buttonClassName, buttonVariants };

@@ -11,6 +11,8 @@ import { Button } from '@/shared/ui/kit/button';
 import { Price } from '@/shared/ui/price';
 import { CartList } from './cart-list';
 import { GetCart200DataItemsItem } from '@/shared/api/gen/model';
+import { ButtonLink } from '@/shared/ui/button-link';
+import { routes } from '@/shared/model';
 
 export function CartContent({
   items,
@@ -36,7 +38,7 @@ export function CartContent({
             <Price value={subtotal} currency={currency} />
           </strong>
         </p>
-        <Button>Оформить заказ</Button>
+        <SheetClose render={<ButtonLink href={routes.CHECKOUT}>Оформить заказ</ButtonLink>} />
         <SheetClose render={<Button variant="outline">Закрыть</Button>} />
       </SheetFooter>
     </>

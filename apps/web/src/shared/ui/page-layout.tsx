@@ -65,6 +65,7 @@ const pageLayoutContentVariants = cva('', {
     variant: {
       default: 'flex flex-col gap-12',
       centered: 'flex flex-col gap-12 items-center justify-center flex-1',
+      'grid-2/1': 'grid grid-cols-[2fr_1fr] gap-12',
     },
   },
   defaultVariants: {
@@ -121,9 +122,7 @@ function PageLayoutEmpty({
           <EmptyTitle>{title}</EmptyTitle>
           <EmptyDescription>{description}</EmptyDescription>
         </EmptyHeader>
-        {!!content && (
-          <EmptyContent className="flex-row justify-center gap-2">{content}</EmptyContent>
-        )}
+        {!!content && <EmptyContent>{content}</EmptyContent>}
       </Empty>
     </PageLayoutContent>
   );
@@ -131,6 +130,7 @@ function PageLayoutEmpty({
 
 export const PageLayout = Object.assign(PageLayoutWrapper, {
   Header: PageLayoutHeader,
+
   Title: PageLayoutTitle,
   Content: PageLayoutContent,
   Error: PageLayoutError,
