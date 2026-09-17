@@ -4,6 +4,11 @@ const object = <T extends Record<string, TSchema>>(properties: T) =>
   Type.Object(properties, { additionalProperties: false });
 const text = (description?: string) => Type.String({ minLength: 1, maxLength: 500, description });
 const money = () => Type.Integer({ minimum: 0, description: 'Копейки; 129000 = 1 290 ₽.' });
+const stock = () =>
+  Type.Integer({
+    minimum: 0,
+    description: 'Лимит количества в одной корзине; учебный остаток.',
+  });
 export const Id = Type.String({ format: 'uuid' });
 const timestamp = () => Type.String({ format: 'date-time' });
 export const EmptyBody = object({});
@@ -36,10 +41,7 @@ export const ProductSchema = object({
   description: text(),
   price: money(),
   currency: Type.Literal('RUB'),
-  stock: Type.Integer({
-    minimum: 0,
-    description: 'Лимит количества в одной корзине; учебный остаток.',
-  }),
+  stock: stock(),
 });
 export const CartItemSchema = object({
   productId: Type.String({ ...text(), readOnly: true }),
@@ -47,6 +49,7 @@ export const CartItemSchema = object({
   unitPrice: Type.Integer({ ...money(), readOnly: true }),
   quantity: Type.Integer({ minimum: 1, maximum: 99 }),
   lineTotal: Type.Integer({ ...money(), readOnly: true }),
+  stock: Type.Integer({ ...stock(), readOnly: true }),
 });
 export const CartSchema = object({
   id: Id,

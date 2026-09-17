@@ -276,6 +276,7 @@ test('cart versions, stock, quote expiry, courier threshold and deletion', async
   );
   await h.call('PUT', '/api/cart/items/lamp-orbit', { quantity: 3 }, { token, status: 201 });
   const cart = await h.call('GET', '/api/cart', undefined, { token });
+  assert.equal(cart.items[0].stock, 10);
   assert.equal(
     (
       await h.call(

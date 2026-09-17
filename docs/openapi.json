@@ -555,7 +555,8 @@
                                   "title",
                                   "unitPrice",
                                   "quantity",
-                                  "lineTotal"
+                                  "lineTotal",
+                                  "stock"
                                 ],
                                 "properties": {
                                   "productId": {
@@ -584,6 +585,12 @@
                                   "lineTotal": {
                                     "minimum": 0,
                                     "description": "Копейки; 129000 = 1 290 ₽.",
+                                    "type": "integer",
+                                    "readOnly": true
+                                  },
+                                  "stock": {
+                                    "minimum": 0,
+                                    "description": "Лимит количества в одной корзине; учебный остаток.",
                                     "type": "integer",
                                     "readOnly": true
                                   }
@@ -2159,7 +2166,8 @@
                               "title",
                               "unitPrice",
                               "quantity",
-                              "lineTotal"
+                              "lineTotal",
+                              "stock"
                             ],
                             "properties": {
                               "productId": {
@@ -2188,6 +2196,12 @@
                               "lineTotal": {
                                 "minimum": 0,
                                 "description": "Копейки; 129000 = 1 290 ₽.",
+                                "type": "integer",
+                                "readOnly": true
+                              },
+                              "stock": {
+                                "minimum": 0,
+                                "description": "Лимит количества в одной корзине; учебный остаток.",
                                 "type": "integer",
                                 "readOnly": true
                               }
@@ -2620,7 +2634,8 @@
                         "title",
                         "unitPrice",
                         "quantity",
-                        "lineTotal"
+                        "lineTotal",
+                        "stock"
                       ],
                       "properties": {
                         "productId": {
@@ -2649,6 +2664,12 @@
                         "lineTotal": {
                           "minimum": 0,
                           "description": "Копейки; 129000 = 1 290 ₽.",
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "stock": {
+                          "minimum": 0,
+                          "description": "Лимит количества в одной корзине; учебный остаток.",
                           "type": "integer",
                           "readOnly": true
                         }
@@ -2948,7 +2969,8 @@
                         "title",
                         "unitPrice",
                         "quantity",
-                        "lineTotal"
+                        "lineTotal",
+                        "stock"
                       ],
                       "properties": {
                         "productId": {
@@ -2977,6 +2999,12 @@
                         "lineTotal": {
                           "minimum": 0,
                           "description": "Копейки; 129000 = 1 290 ₽.",
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "stock": {
+                          "minimum": 0,
+                          "description": "Лимит количества в одной корзине; учебный остаток.",
                           "type": "integer",
                           "readOnly": true
                         }
@@ -3084,7 +3112,8 @@
                         "title",
                         "unitPrice",
                         "quantity",
-                        "lineTotal"
+                        "lineTotal",
+                        "stock"
                       ],
                       "properties": {
                         "productId": {
@@ -3113,6 +3142,12 @@
                         "lineTotal": {
                           "minimum": 0,
                           "description": "Копейки; 129000 = 1 290 ₽.",
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "stock": {
+                          "minimum": 0,
+                          "description": "Лимит количества в одной корзине; учебный остаток.",
                           "type": "integer",
                           "readOnly": true
                         }
@@ -3810,7 +3845,8 @@
                                   "title",
                                   "unitPrice",
                                   "quantity",
-                                  "lineTotal"
+                                  "lineTotal",
+                                  "stock"
                                 ],
                                 "properties": {
                                   "productId": {
@@ -3839,6 +3875,12 @@
                                   "lineTotal": {
                                     "minimum": 0,
                                     "description": "Копейки; 129000 = 1 290 ₽.",
+                                    "type": "integer",
+                                    "readOnly": true
+                                  },
+                                  "stock": {
+                                    "minimum": 0,
+                                    "description": "Лимит количества в одной корзине; учебный остаток.",
                                     "type": "integer",
                                     "readOnly": true
                                   }
@@ -4506,7 +4548,8 @@
                               "title",
                               "unitPrice",
                               "quantity",
-                              "lineTotal"
+                              "lineTotal",
+                              "stock"
                             ],
                             "properties": {
                               "productId": {
@@ -4535,6 +4578,12 @@
                               "lineTotal": {
                                 "minimum": 0,
                                 "description": "Копейки; 129000 = 1 290 ₽.",
+                                "type": "integer",
+                                "readOnly": true
+                              },
+                              "stock": {
+                                "minimum": 0,
+                                "description": "Лимит количества в одной корзине; учебный остаток.",
                                 "type": "integer",
                                 "readOnly": true
                               }
@@ -5031,7 +5080,8 @@
                               "title",
                               "unitPrice",
                               "quantity",
-                              "lineTotal"
+                              "lineTotal",
+                              "stock"
                             ],
                             "properties": {
                               "productId": {
@@ -5060,6 +5110,12 @@
                               "lineTotal": {
                                 "minimum": 0,
                                 "description": "Копейки; 129000 = 1 290 ₽.",
+                                "type": "integer",
+                                "readOnly": true
+                              },
+                              "stock": {
+                                "minimum": 0,
+                                "description": "Лимит количества в одной корзине; учебный остаток.",
                                 "type": "integer",
                                 "readOnly": true
                               }
@@ -5830,7 +5886,8 @@
                               "title",
                               "unitPrice",
                               "quantity",
-                              "lineTotal"
+                              "lineTotal",
+                              "stock"
                             ],
                             "properties": {
                               "productId": {
@@ -5859,6 +5916,12 @@
                               "lineTotal": {
                                 "minimum": 0,
                                 "description": "Копейки; 129000 = 1 290 ₽.",
+                                "type": "integer",
+                                "readOnly": true
+                              },
+                              "stock": {
+                                "minimum": 0,
+                                "description": "Лимит количества в одной корзине; учебный остаток.",
                                 "type": "integer",
                                 "readOnly": true
                               }
@@ -6204,7 +6267,8 @@
                               "title",
                               "unitPrice",
                               "quantity",
-                              "lineTotal"
+                              "lineTotal",
+                              "stock"
                             ],
                             "properties": {
                               "productId": {
@@ -6233,6 +6297,12 @@
                               "lineTotal": {
                                 "minimum": 0,
                                 "description": "Копейки; 129000 = 1 290 ₽.",
+                                "type": "integer",
+                                "readOnly": true
+                              },
+                              "stock": {
+                                "minimum": 0,
+                                "description": "Лимит количества в одной корзине; учебный остаток.",
                                 "type": "integer",
                                 "readOnly": true
                               }
@@ -6796,7 +6866,8 @@
                                 "title",
                                 "unitPrice",
                                 "quantity",
-                                "lineTotal"
+                                "lineTotal",
+                                "stock"
                               ],
                               "properties": {
                                 "productId": {
@@ -6825,6 +6896,12 @@
                                 "lineTotal": {
                                   "minimum": 0,
                                   "description": "Копейки; 129000 = 1 290 ₽.",
+                                  "type": "integer",
+                                  "readOnly": true
+                                },
+                                "stock": {
+                                  "minimum": 0,
+                                  "description": "Лимит количества в одной корзине; учебный остаток.",
                                   "type": "integer",
                                   "readOnly": true
                                 }
@@ -7479,7 +7556,8 @@
                               "title",
                               "unitPrice",
                               "quantity",
-                              "lineTotal"
+                              "lineTotal",
+                              "stock"
                             ],
                             "properties": {
                               "productId": {
@@ -7508,6 +7586,12 @@
                               "lineTotal": {
                                 "minimum": 0,
                                 "description": "Копейки; 129000 = 1 290 ₽.",
+                                "type": "integer",
+                                "readOnly": true
+                              },
+                              "stock": {
+                                "minimum": 0,
+                                "description": "Лимит количества в одной корзине; учебный остаток.",
                                 "type": "integer",
                                 "readOnly": true
                               }

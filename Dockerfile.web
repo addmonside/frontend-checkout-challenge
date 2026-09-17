@@ -16,4 +16,4 @@ ENV WATCHPACK_POLLING=true
 ENV CHOKIDAR_USEPOLLING=true
 
 EXPOSE 3000
-CMD ["npm", "run", "dev", "-w", "web", "--", "--hostname", "0.0.0.0", "--port", "3000"]
+CMD ["npm", "run", "dev", "-w", "@checkout/web", "--", "--hostname", "0.0.0.0", "--port", "3000"]

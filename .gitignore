@@ -1,12 +1,10 @@
 node_modules/
-dist/
 .data/
 /.env*
 !.env.example
 coverage/
 test-results/
 playwright-report/
-.DS_Store
 *.log
 *.tsbuildinfo
 
@@ -20,15 +18,14 @@ dist/
 
 # misc
 .DS_Store
-
-# vercel
-.vercel
+.zed
+.vscode
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 # ai
-/.opencode
-.agents
-AGENTS.md
+**/.opencode
+**/.agents
+**/AGENTS.md

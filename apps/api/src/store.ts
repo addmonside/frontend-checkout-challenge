@@ -162,6 +162,7 @@ export class Store {
         unitPrice: product.price,
         quantity,
         lineTotal: quantity * product.price,
+        stock: product.stock,
       };
       if (index === -1) cart.items.push(item);
       else cart.items[index] = item;
