@@ -1,28 +1,41 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { CartEmpty } from '@/services/cart';
+import { useErrorPageRedirect } from '@/services/utility/errors';
+import { routes } from '@/shared/model';
+import { ButtonLink } from '@/shared/ui/button-link';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { useCheckoutOptions } from '../../common/use-checkout-options';
-import { CartEmpty } from '@/services/cart';
-import { ButtonLink } from '@/shared/ui/button-link';
-import { routes } from '@/shared/model';
-import { useQuote } from '../model/use-qoute';
 import { useCreateOrder } from '../model/use-create-order';
-import { CheckoutPaymentStatus } from './checkout-payment-status';
+import { useQuote } from '../model/use-qoute';
 import { CheckoutPaymentContent } from './checkout-payment-content';
+import { CheckoutPaymentStatus } from './checkout-payment-status';
 
 export function CheckoutPayment({ quoteId }: { quoteId: string }) {
   const router = useRouter();
+  const goToErrorPage = useErrorPageRedirect();
   const { paymentMethods, isPending, error: checkoutError } = useCheckoutOptions();
   const { quote, isPending: isPendingQuote, error: quoteError, isSlateData } = useQuote(quoteId);
   const { createOrder, isPending: isPendingCheckout, error: orderError } = useCreateOrder(quoteId);
 
-  useEffect(() => {
-    if (isSlateData) router.replace(routes.CHECKOUT);
-  }, [isSlateData, router]);
+  const isNotFound = quoteError?.status === 404;
+  const isStaleReload = isSlateData && !isNotFound;
+  const error = orderError || quoteError || checkoutError;
 
-  if (isSlateData) return null; // защита от флеша  router.replace()
+  useEffect(() => {
+    if (isNotFound) {
+      goToErrorPage(quoteError);
+      return;
+    }
+    if (isStaleReload) {
+      router.replace(routes.CHECKOUT);
+      return;
+    }
+  }, [goToErrorPage, isNotFound, isSlateData, isStaleReload, quoteError, router]);
+
+  if (isNotFound || isStaleReload) return null; // защита от флеша перед редиректом
 
   const goToCheckout = () => router.push(routes.CHECKOUT);
 
@@ -31,7 +44,7 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
   ) : (
     <>
       <PageLayout.Content>
-        <PageLayout.Error error={orderError || quoteError || checkoutError} />
+        <PageLayout.Error error={error} />
       </PageLayout.Content>
       {!!quote?.items.length && paymentMethods ? (
         <>

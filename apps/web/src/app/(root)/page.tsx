@@ -1,8 +1,9 @@
-import { ProductListBoundary } from '@/features/products/product-list-boundary';
-import { ProductListSkeleton } from '@/features/products/product-list-skeleton';
-import { PageLayout } from '@/shared/ui/page-layout';
+import { LucideUser } from 'lucide-react';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import { ProductList, ProductListSkeleton } from '@/features/products';
+import { getServerToken } from '@/shared/api/token/token-storage.server';
+import { PageLayout } from '@/shared/ui/page-layout';
 
 export const metadata: Metadata = {
   title: 'Товары | Some Shop',
@@ -19,5 +20,25 @@ export default function Home() {
         <ProductListBoundary />
       </Suspense>
     </PageLayout>
+  );
+}
+
+export async function ProductListBoundary() {
+  const token = (await getServerToken()) ?? '';
+
+  return (
+    <>
+      {!token ? (
+        <PageLayout.Empty
+          title="Авторизуйтесь"
+          description="Для просмотра товаров авторизуйтесь"
+          media={<LucideUser />}
+        />
+      ) : (
+        <PageLayout.Content>
+          <ProductList token={token} />
+        </PageLayout.Content>
+      )}
+    </>
   );
 }
