@@ -1,9 +1,9 @@
+import { LucideClock } from 'lucide-react';
+import { useCountdown } from '@/shared/lib';
+import { appConfig } from '@/shared/model';
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '@/shared/ui/kit/alert';
 import { Button } from '@/shared/ui/kit/button';
-import { useCountdown } from '@/shared/lib';
-import { LucideClock } from 'lucide-react';
 import { Timer } from '@/shared/ui/timer';
-import { appConfig } from '@/shared/model';
 
 export function CheckoutPaymentStatus({
   expiresAt,

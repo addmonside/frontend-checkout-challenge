@@ -1,18 +1,18 @@
-import { preconditions, conditionalRead } from './http.js';
-import Fastify, {
-  type FastifySchema,
-  type FastifyReply,
-  type FastifyRequest,
-  type HTTPMethods,
-} from 'fastify';
+import * as C from '@checkout/contracts';
 import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
-import { randomUUID } from 'node:crypto';
+import { type Static, type TSchema, Type } from '@sinclair/typebox';
+import Fastify, {
+  type FastifyReply,
+  type FastifyRequest,
+  type FastifySchema,
+  type HTTPMethods,
+} from 'fastify';
 import { isUtf8 } from 'node:buffer';
-import { Type, type Static, type TSchema } from '@sinclair/typebox';
-import * as C from '@checkout/contracts';
+import { randomUUID } from 'node:crypto';
 import { deliveryMethods, paymentMethods, products, testCards } from './catalog.js';
+import { conditionalRead, preconditions } from './http.js';
 import { DomainError, Store } from './store.js';
 
 declare module 'fastify' {

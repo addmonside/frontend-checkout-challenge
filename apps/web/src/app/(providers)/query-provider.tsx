@@ -1,9 +1,9 @@
 'use client';
 
-import { appConfig } from '@/shared/model';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
+import { appConfig } from '@/shared/model';
 import { createQueryClient } from './query-client';
 
 export function QueryProvider({ children }: { children: React.ReactNode }) {

@@ -1,11 +1,11 @@
 'use client';
 
-import { useCart } from '../ model/use-cart';
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/shared/ui/kit/sheet';
-import { CartButton } from './cart-button';
-import { CartEmpty } from './cart-empty';
-import { CartContent } from './cart-content';
 import { Button } from '@/shared/ui/kit/button';
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/shared/ui/kit/sheet';
+import { useCart } from '../ model/use-cart';
+import { CartButton } from './cart-button';
+import { CartContent } from './cart-content';
+import { CartEmpty } from './cart-empty';
 
 export function Cart() {
   const { items, quantity, subtotal, currency, isEmpty } = useCart();

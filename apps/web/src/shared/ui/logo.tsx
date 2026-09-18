@@ -6,8 +6,8 @@ const logoVariants = cva('flex items-center gap-2', {
   variants: {
     variant: {
       default: 'bg-card text-card-foreground',
-      footer: '*:[p]:text-md *:[svg]:size-5  *:[p]:font-semibold',
-      header: '*:[p]:text-2xl *:[svg]:size-8  *:[p]:font-bold',
+      footer: '*:[p]:text-md *:[p]:font-semibold *:[svg]:size-5',
+      header: '*:[p]:text-2xl *:[p]:font-bold *:[svg]:size-8',
     },
   },
   defaultVariants: {

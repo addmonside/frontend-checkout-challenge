@@ -1,9 +1,9 @@
+import { useAtomValue } from 'jotai';
+import { useMemo, useState } from 'react';
 import { useCreateQuote } from '@/shared/api';
 import { ApiError } from '@/shared/api';
 import { CreateQuote201Data } from '@/shared/api/gen/model';
-import { useAtomValue } from 'jotai';
 import { checkoutDeliveryAtom, courierFormTriggerAtom } from './checkout-delivery-atom';
-import { useMemo, useState } from 'react';
 
 function buildClientFieldErrors(delivery?: {
   method: 'pickup' | 'courier';

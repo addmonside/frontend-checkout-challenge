@@ -1,8 +1,10 @@
-import { cn } from 'cn';
-import { Alert, AlertAction, AlertDescription, AlertTitle } from './kit/alert';
-import { WidthBoundary } from './width-boundary';
-import { LucideInfo } from 'lucide-react';
 import { cva, VariantProps } from 'class-variance-authority';
+import { cn } from 'cn';
+import { LucideInfo } from 'lucide-react';
+import { ReactNode } from 'react';
+import { ApiError } from '@/shared/api';
+import { humanizeErrorPresentation } from '@/shared/model';
+import { Alert, AlertAction, AlertDescription, AlertTitle } from './kit/alert';
 import {
   Empty,
   EmptyContent,
@@ -11,9 +13,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from './kit/empty';
-import { ReactNode } from 'react';
-import { ApiError } from '@/shared/api';
-import { humanizeErrorPresentation } from '@/shared/model';
+import { WidthBoundary } from './width-boundary';
 
 function PageLayoutWrapper({
   children,
@@ -25,7 +25,7 @@ function PageLayoutWrapper({
   return (
     <WidthBoundary
       as="section"
-      className={cn('@container/page-layout flex w-full flex-1 flex-col pb-15 ', className)}
+      className={cn('@container/page-layout flex w-full flex-1 flex-col pb-15', className)}
       data-slot="page-layout"
     >
       {children}
@@ -54,7 +54,7 @@ function PageLayoutHeader({ className, ...props }: React.ComponentProps<'header'
     <header
       data-slot="page-layout-header"
       className={cn(
-        'bg-background sticky top-0 z-10 flex flex-col gap-8 justify-center h-14 pb-1',
+        'bg-background sticky top-0 z-10 flex h-14 flex-col justify-center gap-8 pb-1',
         className,
       )}
       {...props}
@@ -66,8 +66,8 @@ const pageLayoutContentVariants = cva('', {
   variants: {
     variant: {
       default: 'flex flex-col gap-12',
-      centered: 'flex flex-col gap-12 items-center justify-center flex-1',
-      checkout: 'grid md:grid-cols-[4fr_5fr] gap-12',
+      centered: 'flex flex-1 flex-col items-center justify-center gap-12',
+      checkout: 'grid gap-12 md:grid-cols-[4fr_5fr]',
     },
   },
   defaultVariants: {

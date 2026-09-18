@@ -1,3 +1,4 @@
+import { LucideShoppingBasket } from 'lucide-react';
 import {
   Empty,
   EmptyContent,
@@ -6,7 +7,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/shared/ui/kit/empty';
-import { LucideShoppingBasket } from 'lucide-react';
 
 export function CartEmpty({ renderAction }: { renderAction?: React.ReactNode }) {
   return (

@@ -1,6 +1,6 @@
-import { fetchToken } from './fetch-token';
 import Cookies from 'js-cookie';
 import { appConfig } from '@/shared/model';
+import { fetchToken } from './fetch-token';
 
 class Token {
   private pending: Promise<string> | null = null;

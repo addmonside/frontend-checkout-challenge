@@ -9,7 +9,7 @@ export function ProductListSkeleton() {
     <PageLayout.Content>
       <ItemGroup as="ul" variant="product-list">
         {Array.from({ length: LIMIT }, (_, i) => (
-          <Skeleton key={i} as="li" className="w-full h-70.25" />
+          <Skeleton key={i} as="li" className="h-70.25 w-full" />
         ))}
       </ItemGroup>
     </PageLayout.Content>

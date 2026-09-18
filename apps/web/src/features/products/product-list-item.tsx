@@ -1,3 +1,4 @@
+import { LucideShoppingBag } from 'lucide-react';
 import { CartAdditionButton } from '@/services/cart';
 import {
   Item,
@@ -9,7 +10,6 @@ import {
   ItemTitle,
 } from '@/shared/ui/kit/item';
 import { Price } from '@/shared/ui/price';
-import { LucideShoppingBag } from 'lucide-react';
 
 export function ProductListItem({
   productId,

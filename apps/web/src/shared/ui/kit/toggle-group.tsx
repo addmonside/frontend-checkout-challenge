@@ -1,11 +1,10 @@
 'use client';
 
-import * as React from 'react';
 import { Toggle as TogglePrimitive } from '@base-ui/react/toggle';
 import { ToggleGroup as ToggleGroupPrimitive } from '@base-ui/react/toggle-group';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
-
+import * as React from 'react';
 import { toggleVariants } from '@/shared/ui/kit/toggle';
 
 const ToggleGroupContext = React.createContext<
@@ -19,12 +18,12 @@ const ToggleGroupContext = React.createContext<
   orientation: 'horizontal',
 });
 
-const toggleGroupVariants = cva('group/toggle-group  gap-[--spacing(var(--gap))] rounded-lg', {
+const toggleGroupVariants = cva('group/toggle-group gap-[--spacing(var(--gap))] rounded-lg', {
   variants: {
     variant: {
       default:
         'flex w-fit flex-row items-center data-vertical:flex-col data-vertical:items-stretch',
-      checkout: 'grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] w-full',
+      checkout: 'grid w-full grid-cols-[repeat(auto-fill,minmax(16rem,1fr))]',
     },
   },
   defaultVariants: {
@@ -55,7 +54,7 @@ function ToggleGroup({
       style={{ '--gap': spacing } as React.CSSProperties}
       className={cn(
         toggleGroupVariants({ variant, className }),
-        hasError && 'border border-destructive bg-destructive/10 text-destructive-foreground',
+        hasError && 'border-destructive bg-destructive/10 text-destructive-foreground border',
       )}
       {...props}
     >

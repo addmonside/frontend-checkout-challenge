@@ -1,12 +1,12 @@
 'use client';
 
 import { useAtomValue } from 'jotai/react';
-import { checkoutDeliveryMethodAtom } from '../model/checkout-delivery-atom';
-import { CheckoutDeliveryAddressPickup } from './checkout-delivery-address-pickup';
-import { CheckoutDeliveryAddressCourier } from './checkout-delivery-address-courier';
+import { ComponentProps } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { Field } from '@/shared/ui/kit/field';
-import { ComponentProps } from 'react';
+import { checkoutDeliveryMethodAtom } from '../model/checkout-delivery-atom';
+import { CheckoutDeliveryAddressCourier } from './checkout-delivery-address-courier';
+import { CheckoutDeliveryAddressPickup } from './checkout-delivery-address-pickup';
 
 export function CheckoutDeliveryAddress({
   info,

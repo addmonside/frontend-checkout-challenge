@@ -1,7 +1,7 @@
-import { toApiError, useCreateOrder as useCreateOrderApi } from '@/shared/api';
-import { CreateOrderBody } from '@/shared/api/gen/model';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
+import { toApiError, useCreateOrder as useCreateOrderApi } from '@/shared/api';
+import { CreateOrderBody } from '@/shared/api/gen/model';
 import { checkoutPaymentAtom } from './checkout-payment-atom';
 
 export function useCreateOrder(quoteId: string) {

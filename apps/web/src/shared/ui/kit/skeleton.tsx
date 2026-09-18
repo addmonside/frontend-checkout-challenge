@@ -11,7 +11,7 @@ export function Skeleton<T extends React.ElementType = 'div'>({
   return (
     <Component
       data-slot="skeleton"
-      className={cn('animate-pulse rounded-md bg-muted', className)}
+      className={cn('bg-muted animate-pulse rounded-md', className)}
       {...props}
     />
   );

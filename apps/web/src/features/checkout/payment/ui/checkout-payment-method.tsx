@@ -1,11 +1,11 @@
 'use client';
 
-import { ToggleGroup } from '@/shared/ui/kit/toggle-group';
+import { useAtom } from 'jotai/react';
 import { GetCheckoutOptions200DataPaymentMethodsItem } from '@/shared/api/gen/model';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
-import { CheckoutPaymentMethodItem } from './checkout-payment-method-item';
-import { useAtom } from 'jotai/react';
+import { ToggleGroup } from '@/shared/ui/kit/toggle-group';
 import { checkoutPaymentAtom } from '../model/checkout-payment-atom';
+import { CheckoutPaymentMethodItem } from './checkout-payment-method-item';
 
 export function CheckoutPaymentMethod({
   paymentMethods,

@@ -1,14 +1,14 @@
 import { CartList } from '@/services/cart';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
-import { CheckoutPaymentMethod } from './checkout-payment-method';
-import { CheckoutPaymentCustomerForm } from './checkout-payment-customer-form';
-import { CheckoutInfo } from '../../common/checkout-info';
-import { Button } from '@/shared/ui/kit/button';
 import {
   CreateOrderBody,
   GetCheckoutOptions200DataPaymentMethodsItem,
   GetQuote200Data,
 } from '@/shared/api/gen/model';
+import { Button } from '@/shared/ui/kit/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
+import { CheckoutInfo } from '../../common/checkout-info';
+import { CheckoutPaymentCustomerForm } from './checkout-payment-customer-form';
+import { CheckoutPaymentMethod } from './checkout-payment-method';
 
 export function CheckoutPaymentContent({
   quote,

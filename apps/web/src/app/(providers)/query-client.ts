@@ -1,4 +1,4 @@
-import { QueryClient, QueryCache, MutationCache } from '@tanstack/react-query';
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 import { ApiError } from '@/shared/api';
 import { humanizeApiError } from '@/shared/model';
 import { toast } from '@/shared/ui/kit/toast';

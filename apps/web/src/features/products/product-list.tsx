@@ -1,12 +1,12 @@
 'use cache';
 
+import { LucideShoppingBag } from 'lucide-react';
+import { cacheLife } from 'next/cache';
 import { fetchServer } from '@/shared/api/fetch/fetch-server';
 import { ListProducts200 } from '@/shared/api/gen/model';
-import { PageLayout } from '@/shared/ui/page-layout';
-import { cacheLife } from 'next/cache';
-import { ProductListItem } from './product-list-item';
-import { LucideShoppingBag } from 'lucide-react';
 import { ItemGroup } from '@/shared/ui/kit/item';
+import { PageLayout } from '@/shared/ui/page-layout';
+import { ProductListItem } from './product-list-item';
 
 export async function ProductList({ token }: { token: string }) {
   cacheLife('minutes');

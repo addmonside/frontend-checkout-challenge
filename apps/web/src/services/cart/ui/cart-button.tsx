@@ -1,8 +1,8 @@
 import { Button as ButtonPrimitive } from '@base-ui/react/button';
+import { LucideShoppingBasket } from 'lucide-react';
 import { capValue, cn } from '@/shared/lib';
 import { Badge } from '@/shared/ui/kit/badge';
 import { Button } from '@/shared/ui/kit/button';
-import { LucideShoppingBasket } from 'lucide-react';
 
 export function CartButton({
   quantity,

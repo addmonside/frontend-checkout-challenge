@@ -17,10 +17,8 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
-
-import type { Def0, GetApi200 } from '../model';
-
 import { fetchClient } from '../../fetch/fetch-client';
+import type { Def0, GetApi200 } from '../model';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 

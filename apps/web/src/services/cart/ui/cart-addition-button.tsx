@@ -1,10 +1,10 @@
 'use client';
 
 import { Button } from '@/shared/ui/kit/button';
+import { QuantityButton } from '@/shared/ui/quantity-button';
 import { useAddToCart } from '../ model/use-add-to-cart';
 import { useCartItem } from '../ model/use-cart-item';
 import { useRemoveFromCart } from '../ model/use-remove-from-cart';
-import { QuantityButton } from '@/shared/ui/quantity-button';
 
 export function CartAdditionButton({ productId, stock }: { productId: string; stock?: number }) {
   const { item, isPending } = useCartItem(productId);

@@ -1,6 +1,6 @@
+import { Metadata } from 'next';
 import { CheckoutDelivery } from '@/features/checkout';
 import { PageLayout } from '@/shared/ui/page-layout';
-import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Оформление | Some Shop',

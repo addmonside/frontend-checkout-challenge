@@ -1,7 +1,7 @@
+import { type VariantProps } from 'class-variance-authority';
+import { cn } from 'cn';
 import Link from 'next/link';
 import type * as React from 'react';
-import { cn } from 'cn';
-import { type VariantProps } from 'class-variance-authority';
 import { buttonClassName, buttonVariants } from './kit/button';
 import { Spinner } from './kit/spinner';
 

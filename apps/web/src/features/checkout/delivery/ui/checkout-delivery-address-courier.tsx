@@ -1,9 +1,11 @@
 'use client';
 
-import type * as z from 'zod';
+import { useSetAtom } from 'jotai/react';
 import { useEffect, useLayoutEffect } from 'react';
 import { Controller } from 'react-hook-form';
-import { useSetAtom } from 'jotai/react';
+import type * as z from 'zod';
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/ui/kit/field';
+import { Input } from '@/shared/ui/kit/input';
 import {
   checkoutDeliveryAddressAtom,
   courierFormTriggerAtom,
@@ -12,8 +14,6 @@ import {
   courierAddressSchema,
   useCheckoutDeliveryCourierForm,
 } from '../model/use-checkout-delivery-courier-form';
-import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/ui/kit/field';
-import { Input } from '@/shared/ui/kit/input';
 
 type CourierFieldName = keyof z.infer<typeof courierAddressSchema>;
 

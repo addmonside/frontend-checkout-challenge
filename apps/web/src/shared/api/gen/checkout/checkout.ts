@@ -20,7 +20,7 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
-
+import { fetchClient } from '../../fetch/fetch-client';
 import type {
   CreateQuote201,
   CreateQuoteBody,
@@ -28,8 +28,6 @@ import type {
   GetCheckoutOptions200,
   GetQuote200,
 } from '../model';
-
-import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 

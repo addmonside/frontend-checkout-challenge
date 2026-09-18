@@ -1,5 +1,5 @@
-import 'server-only';
 import { cookies } from 'next/headers';
+import 'server-only';
 import { appConfig } from '@/shared/model';
 
 export async function getServerToken(): Promise<string | null> {

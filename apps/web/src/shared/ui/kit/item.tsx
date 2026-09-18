@@ -1,7 +1,6 @@
-import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
-
+import * as React from 'react';
 import { Separator } from '@/shared/ui/kit/separator';
 
 const itemGroupVariants = cva('group/item-group w-full', {
@@ -50,21 +49,21 @@ function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Sepa
 }
 
 const itemVariants = cva(
-  'group/item text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted ',
+  'group/item focus-visible:border-ring focus-visible:ring-ring/50 [a]:hover:bg-muted text-sm transition-colors duration-100 outline-none focus-visible:ring-[3px] [a]:transition-colors',
   {
     variants: {
       variant: {
         default:
-          'border-transparent flex w-full items-center rounded-lg border gap-2.5 px-3 py-2.5',
+          'flex w-full items-center gap-2.5 rounded-lg border border-transparent px-3 py-2.5',
         'product-item': cn(
-          'flex flex-col border-transparent bg-muted/10 gap-3 p-2 hover:bg-muted/40 rounded-2xl transition-colors items-stretch',
-          '*:data-[slot=item-media]:flex *:data-[slot=item-media]:items-center *:data-[slot=item-media]:justify-center *:data-[slot=item-media]:h-36 *:data-[slot=item-media]:w-full *:data-[slot=item-media]:rounded-lg *:data-[slot=item-media]:bg-muted/50 *:data-[slot=item-media]:[&_svg]:size-12 *:data-[slot=item-media]:[&_svg]:text-muted-foreground',
-          '*:data-[slot=item-footer]:min-h-8 ',
+          'bg-muted/10 hover:bg-muted/40 flex flex-col items-stretch gap-3 rounded-2xl border-transparent p-2 transition-colors',
+          '*:data-[slot=item-media]:bg-muted/50 *:data-[slot=item-media]:[&_svg]:text-muted-foreground *:data-[slot=item-media]:flex *:data-[slot=item-media]:h-36 *:data-[slot=item-media]:w-full *:data-[slot=item-media]:items-center *:data-[slot=item-media]:justify-center *:data-[slot=item-media]:rounded-lg *:data-[slot=item-media]:[&_svg]:size-12',
+          '*:data-[slot=item-footer]:min-h-8',
           '*:data-[slot=item-content]:basis-full',
         ),
         'cart-item': cn('flex items-center font-semibold'),
         'checkout-toggle-item':
-          'flex items-center font-semibold p-3 *:data-[slot=item-content]:items-center w-full rounded-lg',
+          'flex w-full items-center rounded-lg p-3 font-semibold *:data-[slot=item-content]:items-center',
       },
     },
     defaultVariants: {
@@ -163,7 +162,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot="item-description"
       className={cn(
-        'line-clamp-2 text-left text-sm leading-normal font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary inline-flex gap-2',
+        'text-muted-foreground [&>a:hover]:text-primary line-clamp-2 inline-flex gap-2 text-left text-sm leading-normal font-normal group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4',
         className,
       )}
       {...props}

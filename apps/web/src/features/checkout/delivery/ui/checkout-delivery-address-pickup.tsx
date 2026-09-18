@@ -1,11 +1,11 @@
 'use client';
 
 import { useAtom } from 'jotai/react';
-import { checkoutDeliveryAddressAtom } from '../model/checkout-delivery-atom';
-import { FieldError } from '@/shared/ui/kit/field';
-import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
 import { GetCheckoutOptions200DataDeliveryMethodsItemPickupPointsItem } from '@/shared/api/gen/model';
+import { FieldError } from '@/shared/ui/kit/field';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/shared/ui/kit/item';
+import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
+import { checkoutDeliveryAddressAtom } from '../model/checkout-delivery-atom';
 
 export function CheckoutDeliveryAddressPickup({
   pickupPoints,

@@ -1,12 +1,12 @@
+import SwaggerParser from '@apidevtools/swagger-parser';
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
 import { randomUUID } from 'node:crypto';
 import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import SwaggerParser from '@apidevtools/swagger-parser';
-import Ajv from 'ajv';
-import addFormats from 'ajv-formats';
+import { test } from 'node:test';
 import { buildApp } from '../dist/app.js';
 
 const customer = {

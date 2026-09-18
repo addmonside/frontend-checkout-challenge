@@ -1,11 +1,11 @@
 'use client';
 
+import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 import {
   CreateQuoteBodyDelivery,
   GetCheckoutOptions200DataDeliveryMethodsItem,
 } from '@/shared/api/gen/model';
-import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
 
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 

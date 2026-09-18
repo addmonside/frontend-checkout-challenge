@@ -11,7 +11,7 @@ export function WidthBoundary<T extends React.ElementType = 'div'>({
   return (
     <Component
       data-slot="width-boundary"
-      className={cn('px-6 max-w-7xl self-center', className)}
+      className={cn('max-w-7xl self-center px-6', className)}
       {...props}
     />
   );

@@ -1,6 +1,6 @@
-import { PageLayout } from '@/shared/ui/page-layout';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import { PageLayout } from '@/shared/ui/page-layout';
 
 export const metadata: Metadata = {
   title: 'Заказы | Some Shop',

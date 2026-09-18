@@ -1,6 +1,3 @@
-import { createHash, randomUUID } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
-import { dirname } from 'node:path';
 import type {
   Cart,
   CreateOrder,
@@ -11,9 +8,12 @@ import type {
   Scenario,
   Simulation,
 } from '@checkout/contracts';
+import { createHash, randomUUID } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { products } from './catalog.js';
-
 import { DomainError } from './http.js';
+
 export { DomainError } from './http.js';
 
 type Session = { id: string; token: string; cart: Cart };

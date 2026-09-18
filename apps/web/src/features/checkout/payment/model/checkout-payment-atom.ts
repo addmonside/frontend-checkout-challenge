@@ -1,7 +1,7 @@
 'use client';
 
-import { CreateOrderBodyPaymentMethod } from '@/shared/api/gen/model';
 import { atomWithStorage } from 'jotai/utils';
+import { CreateOrderBodyPaymentMethod } from '@/shared/api/gen/model';
 
 type PaymentMethod =
   (typeof CreateOrderBodyPaymentMethod)[keyof typeof CreateOrderBodyPaymentMethod];

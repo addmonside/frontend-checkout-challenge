@@ -1,12 +1,12 @@
 'use client';
 
-import { ToggleGroup } from '@/shared/ui/kit/toggle-group';
+import { useAtom } from 'jotai/react';
 import { GetCheckoutOptions200DataDeliveryMethodsItem } from '@/shared/api/gen/model';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { FieldError } from '@/shared/ui/kit/field';
-import { CheckoutDeliveryMethodItem } from './checkout-delivery-method-item';
+import { ToggleGroup } from '@/shared/ui/kit/toggle-group';
 import { checkoutDeliveryMethodAtom } from '../model/checkout-delivery-atom';
-import { useAtom } from 'jotai/react';
+import { CheckoutDeliveryMethodItem } from './checkout-delivery-method-item';
 
 export function CheckoutDeliveryMethod({
   deliveryMethods,

@@ -1,12 +1,12 @@
 'use client';
 
+import { ComponentProps, ReactNode } from 'react';
 import { Controller } from 'react-hook-form';
+import { CreateOrder200DataCustomer } from '@/shared/api/gen/model';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/ui/kit/field';
 import { Input } from '@/shared/ui/kit/input';
 import { useCheckoutPaymentCustomerForm } from '../model/use-checkout-payment-customer-form';
-import { ComponentProps, ReactNode } from 'react';
-import { CreateOrder200DataCustomer } from '@/shared/api/gen/model';
 
 export function CheckoutPaymentCustomerForm({
   info,

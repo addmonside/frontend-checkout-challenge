@@ -20,7 +20,7 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
-
+import { fetchClient } from '../../fetch/fetch-client';
 import type {
   Def0,
   GetCart200,
@@ -29,8 +29,6 @@ import type {
   SetCartItem201,
   SetCartItemBody,
 } from '../model';
-
-import { fetchClient } from '../../fetch/fetch-client';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 

@@ -1,9 +1,9 @@
-import assert from 'node:assert/strict';
-import { randomUUID } from 'node:crypto';
-import { setTimeout as pause } from 'node:timers/promises';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
+import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import { setTimeout as pause } from 'node:timers/promises';
 
 const base = (process.env.BASE_URL ?? 'http://localhost:4000').replace(/\/$/, '');
 const specResponse = await fetch(`${base}/openapi.json`, { signal: AbortSignal.timeout(5000) });

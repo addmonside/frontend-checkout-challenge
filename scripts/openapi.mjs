@@ -1,6 +1,6 @@
+import SwaggerParser from '@apidevtools/swagger-parser';
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
-import SwaggerParser from '@apidevtools/swagger-parser';
 import { buildApp } from '../apps/api/dist/app.js';
 
 const app = await buildApp();

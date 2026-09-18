@@ -1,17 +1,17 @@
 'use client';
 
-import { CheckoutDeliveryMethod } from './checkout-delivery-method';
+import { useRouter } from 'next/navigation';
+import { CartEmpty, CartList } from '@/services/cart';
+import { routes } from '@/shared/model';
+import { ButtonLink } from '@/shared/ui/button-link';
+import { Button } from '@/shared/ui/kit/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { useCheckoutOptions } from '../../common/use-checkout-options';
-import { CartEmpty, CartList } from '@/services/cart';
-import { ButtonLink } from '@/shared/ui/button-link';
-import { routes } from '@/shared/model';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
-import { CheckoutDeliveryAddress } from './checkout-delivery-address';
 import { useCreateCheckout } from '../model/use-create-quote';
-import { Button } from '@/shared/ui/kit/button';
+import { CheckoutDeliveryAddress } from './checkout-delivery-address';
 import { CheckoutDeliveryInfo } from './checkout-delivery-info';
-import { useRouter } from 'next/navigation';
+import { CheckoutDeliveryMethod } from './checkout-delivery-method';
 
 export function CheckoutDelivery() {
   const router = useRouter();

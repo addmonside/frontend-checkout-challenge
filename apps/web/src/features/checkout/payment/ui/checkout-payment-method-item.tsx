@@ -1,7 +1,7 @@
 'use client';
 
-import { ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
 import { Item, ItemContent, ItemTitle } from '@/shared/ui/kit/item';
+import { ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
 
 export function CheckoutPaymentMethodItem({ id, title }: { id: string; title: string }) {
   return (

@@ -1,5 +1,9 @@
 'use client';
 
+import { GetCart200DataItemsItem } from '@/shared/api/gen/model';
+import { routes } from '@/shared/model';
+import { ButtonLink } from '@/shared/ui/button-link';
+import { Button } from '@/shared/ui/kit/button';
 import {
   SheetClose,
   SheetContentContent,
@@ -7,12 +11,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/shared/ui/kit/sheet';
-import { Button } from '@/shared/ui/kit/button';
 import { Price } from '@/shared/ui/price';
 import { CartList } from './cart-list';
-import { GetCart200DataItemsItem } from '@/shared/api/gen/model';
-import { ButtonLink } from '@/shared/ui/button-link';
-import { routes } from '@/shared/model';
 
 export function CartContent({
   items,
@@ -32,7 +32,7 @@ export function CartContent({
         <CartList items={items} currency={currency} />
       </SheetContentContent>
       <SheetFooter>
-        <p className="flex justify-between w-full">
+        <p className="flex w-full justify-between">
           <em className="">Итого</em>
           <strong className="font-bold">
             <Price value={subtotal} currency={currency} />

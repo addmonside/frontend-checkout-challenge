@@ -1,6 +1,6 @@
 import { GetCart200DataItemsItem } from '@/shared/api/gen/model';
-import { CartListItem } from './cart-list-item';
 import { ItemGroup } from '@/shared/ui/kit/item';
+import { CartListItem } from './cart-list-item';
 
 export function CartList({
   items,
