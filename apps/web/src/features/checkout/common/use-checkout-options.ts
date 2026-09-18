@@ -1,8 +1,8 @@
-import { useGetCheckoutOptions } from '@/shared/api';
+import { toApiError, useGetCheckoutOptions } from '@/shared/api';
 import { GetCheckoutOptions200Data } from '@/shared/api/gen/model';
 
 export const useCheckoutOptions = () => {
-  const { data, isPending } = useGetCheckoutOptions();
+  const { data, isPending, error } = useGetCheckoutOptions();
 
   const options =
     typeof data?.data === 'object' &&
@@ -17,5 +17,6 @@ export const useCheckoutOptions = () => {
     paymentMethods: options?.paymentMethods,
     cart: options?.cart,
     isPending,
+    error: toApiError(error),
   };
 };

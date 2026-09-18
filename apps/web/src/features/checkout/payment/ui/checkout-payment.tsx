@@ -14,41 +14,42 @@ import { CheckoutPaymentContent } from './checkout-payment-content';
 
 export function CheckoutPayment({ quoteId }: { quoteId: string }) {
   const router = useRouter();
-  const { paymentMethods, isPending } = useCheckoutOptions();
-  const { quote, isPending: isPendingQuote, error: quoteError } = useQuote(quoteId);
+  const { paymentMethods, isPending, error: checkoutError } = useCheckoutOptions();
+  const { quote, isPending: isPendingQuote, error: quoteError, isSlateData } = useQuote(quoteId);
   const { createOrder, isPending: isPendingCheckout, error: orderError } = useCreateOrder(quoteId);
 
-  // ! расчёт удалён или недоступен — вернуться на шаг доставки
-  const quoteLoadStale = !!quoteError?.isStaleData;
-
   useEffect(() => {
-    if (quoteLoadStale) router.replace(routes.CHECKOUT);
-  }, [quoteLoadStale, router]);
+    if (isSlateData) router.replace(routes.CHECKOUT);
+  }, [isSlateData, router]);
 
-  if (quoteLoadStale) return null;
+  if (isSlateData) return null; // защита от флеша  router.replace()
 
   const goToCheckout = () => router.push(routes.CHECKOUT);
 
   return isPending && isPendingQuote ? (
     <div>Loading...</div>
-  ) : !!quote?.items.length && paymentMethods ? (
+  ) : (
     <>
       <PageLayout.Content>
-        <CheckoutPaymentStatus expiresAt={quote.expiresAt} onRecalculate={goToCheckout} />
+        <PageLayout.Error error={orderError || quoteError || checkoutError} />
       </PageLayout.Content>
-      <PageLayout.Content>
-        <PageLayout.Error error={orderError || quoteError} />
-      </PageLayout.Content>
-      <PageLayout.Content variant="checkout">
-        <CheckoutPaymentContent
-          quote={quote}
-          paymentMethods={paymentMethods}
-          isPending={isPendingCheckout}
-          onSubmit={createOrder}
-        />
-      </PageLayout.Content>
+      {!!quote?.items.length && paymentMethods ? (
+        <>
+          <PageLayout.Content>
+            <CheckoutPaymentStatus expiresAt={quote.expiresAt} onRecalculate={goToCheckout} />
+          </PageLayout.Content>
+          <PageLayout.Content variant="checkout">
+            <CheckoutPaymentContent
+              quote={quote}
+              paymentMethods={paymentMethods}
+              isPending={isPendingCheckout}
+              onSubmit={createOrder}
+            />
+          </PageLayout.Content>
+        </>
+      ) : (
+        <CartEmpty renderAction={<ButtonLink href={routes.HOME}> покупками</ButtonLink>} />
+      )}
     </>
-  ) : (
-    <CartEmpty renderAction={<ButtonLink href={routes.HOME}> покупками</ButtonLink>} />
   );
 }

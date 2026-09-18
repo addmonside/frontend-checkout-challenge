@@ -11,5 +11,7 @@ export const useQuote = (quoteId: string) => {
       ? (data.data as unknown as GetQuote200Data)
       : undefined;
 
-  return { quote, isPending, error: toApiError(error) };
+  const err = toApiError(error);
+
+  return { quote, isPending, error: err, isSlateData: !!err?.isStaleData };
 };

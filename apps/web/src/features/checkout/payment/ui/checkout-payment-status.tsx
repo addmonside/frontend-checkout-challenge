@@ -20,9 +20,13 @@ export function CheckoutPaymentStatus({
     <Alert variant={isExpired ? 'destructive' : 'default'}>
       <LucideClock />
       <AlertTitle>
-        {isExpired
-          ? 'Расчёт устарел'
-          : `Расчёт устарит через ${(<Timer expiresAt={expiresAt} format="short" />)}`}
+        {isExpired ? (
+          'Расчёт устарел'
+        ) : (
+          <>
+            Расчёт устареет через <Timer expiresAt={expiresAt} format="short" />
+          </>
+        )}
       </AlertTitle>
       <AlertDescription>
         {isExpired
