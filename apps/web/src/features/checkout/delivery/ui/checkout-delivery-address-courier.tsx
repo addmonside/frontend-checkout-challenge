@@ -12,7 +12,6 @@ import {
   courierAddressSchema,
   useCheckoutDeliveryCourierForm,
 } from '../model/use-checkout-delivery-courier-form';
-import { CardContent } from '@/shared/ui/kit/card';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/ui/kit/field';
 import { Input } from '@/shared/ui/kit/input';
 
@@ -50,7 +49,7 @@ export function CheckoutDeliveryAddressCourier({
   }, [setAddress, values]);
 
   return (
-    <CardContent as="form">
+    <>
       <FieldGroup>
         <Controller
           name="city"
@@ -126,6 +125,6 @@ export function CheckoutDeliveryAddressCourier({
           )}
         />
       </FieldGroup>
-    </CardContent>
+    </>
   );
 }

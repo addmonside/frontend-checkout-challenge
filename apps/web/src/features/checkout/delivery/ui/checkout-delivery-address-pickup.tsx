@@ -2,7 +2,6 @@
 
 import { useAtom } from 'jotai/react';
 import { checkoutDeliveryAddressAtom } from '../model/checkout-delivery-atom';
-import { CardContent } from '@/shared/ui/kit/card';
 import { FieldError } from '@/shared/ui/kit/field';
 import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
 import { GetCheckoutOptions200DataDeliveryMethodsItemPickupPointsItem } from '@/shared/api/gen/model';
@@ -26,7 +25,7 @@ export function CheckoutDeliveryAddressPickup({
   };
 
   return (
-    <CardContent>
+    <>
       <ToggleGroup
         value={selectedPickupPointId ? [selectedPickupPointId] : []}
         onValueChange={handleSelectMethod}
@@ -45,6 +44,6 @@ export function CheckoutDeliveryAddressPickup({
         ))}
       </ToggleGroup>
       {error && <FieldError>{error}</FieldError>}
-    </CardContent>
+    </>
   );
 }

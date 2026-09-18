@@ -37,7 +37,7 @@ export function useCreateCheckout(cartVersion: number) {
     return { ...clientErrors, ...toApiFieldErrors(error) };
   }, [attempted, delivery, error]);
 
-  const handleCreate = async () => {
+  const createCheckout = async () => {
     setAttempted(true);
 
     if (!delivery) return;
@@ -51,5 +51,5 @@ export function useCreateCheckout(cartVersion: number) {
     mutate({ data: { cartVersion, delivery } });
   };
 
-  return { createCheckout: handleCreate, isPending, fieldErrors };
+  return { createCheckout, isPending, fieldErrors };
 }

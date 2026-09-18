@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai/react';
 import { checkoutDeliveryMethodAtom } from '../model/checkout-delivery-atom';
 import { CheckoutDeliveryAddressPickup } from './checkout-delivery-address-pickup';
 import { CheckoutDeliveryAddressCourier } from './checkout-delivery-address-courier';
-import { Card, CardFooter, CardHeader, CardTitle } from '@/shared/ui/kit/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { Field } from '@/shared/ui/kit/field';
 import { ComponentProps } from 'react';
 
@@ -31,26 +31,28 @@ export function CheckoutDeliveryAddress({
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      {method && method.id === 'pickup' && (
-        <CheckoutDeliveryAddressPickup
-          pickupPoints={method.pickupPoints}
-          error={errors?.pickupPointId}
-        />
-      )}
-      {method && method.id === 'courier' && (
-        <CheckoutDeliveryAddressCourier
-          errors={{
-            city: errors?.city,
-            street: errors?.street,
-            house: errors?.house,
-            apartment: errors?.apartment,
-          }}
-        />
-      )}
+      <CardContent as="form" id="checkout-courier-form">
+        {method && method.id === 'pickup' && (
+          <CheckoutDeliveryAddressPickup
+            pickupPoints={method.pickupPoints}
+            error={errors?.pickupPointId}
+          />
+        )}
+        {method && method.id === 'courier' && (
+          <CheckoutDeliveryAddressCourier
+            errors={{
+              city: errors?.city,
+              street: errors?.street,
+              house: errors?.house,
+              apartment: errors?.apartment,
+            }}
+          />
+        )}
+      </CardContent>
       <CardFooter>
         <Field>
           {info}
-          <Action type="submit" form="checkout-customer-form" />
+          <Action type="submit" form="checkout-courier-form" />
         </Field>
       </CardFooter>
     </Card>
