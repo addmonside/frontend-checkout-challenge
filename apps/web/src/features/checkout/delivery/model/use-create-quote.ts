@@ -1,5 +1,6 @@
 import { useCreateQuote } from '@/shared/api';
 import { ApiError } from '@/shared/api';
+import { CreateQuote201Data } from '@/shared/api/gen/model';
 import { useAtomValue } from 'jotai';
 import { checkoutDeliveryAtom, courierFormTriggerAtom } from './checkout-delivery-atom';
 import { useMemo, useState } from 'react';
@@ -26,8 +27,18 @@ function toApiFieldErrors(error: unknown): Record<string, string> {
   return error instanceof ApiError ? error.toFieldErrorMap() : {};
 }
 
-export function useCreateCheckout(cartVersion: number) {
-  const { mutate, isPending, error } = useCreateQuote();
+export function useCreateCheckout(
+  cartVersion: number,
+  onSuccess?: (data: CreateQuote201Data) => void,
+) {
+  const { mutate, isPending, error } = useCreateQuote({
+    mutation: {
+      onSuccess: (res) => {
+        const quote = res.data as unknown as CreateQuote201Data;
+        onSuccess?.(quote);
+      },
+    },
+  });
   const delivery = useAtomValue(checkoutDeliveryAtom);
   const courierTrigger = useAtomValue(courierFormTriggerAtom);
   const [attempted, setAttempted] = useState(false);

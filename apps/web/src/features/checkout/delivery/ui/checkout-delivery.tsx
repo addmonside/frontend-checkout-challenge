@@ -11,14 +11,18 @@ import { CheckoutDeliveryAddress } from './checkout-delivery-address';
 import { useCreateCheckout } from '../model/use-create-quote';
 import { Button } from '@/shared/ui/kit/button';
 import { CheckoutDeliveryInfo } from './checkout-delivery-info';
+import { useRouter } from 'next/navigation';
 
 export function CheckoutDelivery() {
+  const router = useRouter();
   const { deliveryMethods, cart, isPending } = useCheckoutOptions();
   const {
     createCheckout,
     isPending: isPendingCheckout,
     fieldErrors,
-  } = useCreateCheckout(cart?.version || 0);
+  } = useCreateCheckout(cart?.version || 0, (data) => {
+    router.push(routes.CHECKOUT_QUOTE.replace('[quoteId]', data.id));
+  });
 
   return isPending ? (
     <div>Loading...</div>
