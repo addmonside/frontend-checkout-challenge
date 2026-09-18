@@ -14,5 +14,6 @@ export const appConfig = {
       expires: 30, // 30 дней
     },
   },
-  defaultCurrency: 'RUB',
+  DEFAULT_CURRENCY: 'RUB',
+  QUOTE_WARNING_MINUTES: 3,
 } as const;

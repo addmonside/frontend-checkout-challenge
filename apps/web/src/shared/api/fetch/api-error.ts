@@ -25,6 +25,16 @@ export class ApiError extends Error {
     return this.code === 'VALIDATION_ERROR' && this.fields.length > 0;
   }
 
+  /** true, если данные устарели: расчёт просрочен, корзина изменилась, версия не совпадает */
+  get isStaleData() {
+    return [
+      'QUOTE_EXPIRED',
+      'QUOTE_NOT_FOUND',
+      'CART_VERSION_CONFLICT',
+      'PRECONDITION_FAILED',
+    ].includes(this.code);
+  }
+
   /**
    * "body/customer/email" -> "customer.email" — под react-hook-form setError.
    * Считаем один раз при обращении, не на каждый рендер компонента.
@@ -39,3 +49,8 @@ export class ApiError extends Error {
 }
 
 export class NetworkError extends Error {}
+
+/** Приводит произвольную ошибку к ApiError: undefined, если это сетевая/другая ошибка */
+export function toApiError(error: unknown): ApiError | undefined {
+  return error instanceof ApiError ? error : undefined;
+}

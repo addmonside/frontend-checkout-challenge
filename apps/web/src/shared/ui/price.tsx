@@ -17,7 +17,7 @@ const formatters: Record<string, Intl.NumberFormat> = {
 
 export const Price = ({
   value,
-  currency = appConfig.defaultCurrency,
+  currency = appConfig.DEFAULT_CURRENCY,
   zeroTitle = 'Бесплатно',
 }: {
   value: number;
@@ -26,6 +26,6 @@ export const Price = ({
 }) => {
   return !!value
     ? (formatters[currency].format(value / 100) ??
-        formatters[appConfig.defaultCurrency].format(value))
+        formatters[appConfig.DEFAULT_CURRENCY].format(value))
     : zeroTitle;
 };

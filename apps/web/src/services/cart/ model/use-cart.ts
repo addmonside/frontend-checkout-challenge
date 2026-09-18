@@ -9,7 +9,7 @@ export function useCart() {
   const items = isCartData(cartData) ? cartData.items : [];
   const quantity = isCartData(cartData) ? cartData.quantity : 0;
   const subtotal = isCartData(cartData) ? cartData.subtotal : 0;
-  const currency = isCartData(cartData) ? cartData.currency : appConfig.defaultCurrency;
+  const currency = isCartData(cartData) ? cartData.currency : appConfig.DEFAULT_CURRENCY;
   const isEmpty = quantity === 0;
 
   return {

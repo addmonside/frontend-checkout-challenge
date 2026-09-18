@@ -5,15 +5,16 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/u
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/ui/kit/field';
 import { Input } from '@/shared/ui/kit/input';
 import { useCheckoutPaymentCustomerForm } from '../model/use-checkout-payment-customer-form';
-import { ReactNode } from 'react';
-import { Button } from '@/shared/ui/kit/button';
+import { ComponentProps, ReactNode } from 'react';
 import { CreateOrder200DataCustomer } from '@/shared/api/gen/model';
 
 export function CheckoutPaymentCustomerForm({
   info,
+  action: Action,
   onSubmit,
 }: {
   info: ReactNode;
+  action: React.FC<ComponentProps<'button'>>;
   onSubmit: (data: CreateOrder200DataCustomer) => void;
 }) {
   const { form, submit } = useCheckoutPaymentCustomerForm(onSubmit);
@@ -86,9 +87,7 @@ export function CheckoutPaymentCustomerForm({
       <CardFooter>
         <Field>
           {info}
-          <Button variant="checkout" type="submit" form="checkout-customer-form">
-            Оформить
-          </Button>
+          <Action type="submit" form="checkout-customer-form" />
         </Field>
       </CardFooter>
     </Card>

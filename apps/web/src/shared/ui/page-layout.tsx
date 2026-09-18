@@ -1,5 +1,5 @@
 import { cn } from 'cn';
-import { Alert, AlertDescription } from './kit/alert';
+import { Alert, AlertAction, AlertDescription, AlertTitle } from './kit/alert';
 import { WidthBoundary } from './width-boundary';
 import { LucideInfo } from 'lucide-react';
 import { cva, VariantProps } from 'class-variance-authority';
@@ -12,6 +12,8 @@ import {
   EmptyTitle,
 } from './kit/empty';
 import { ReactNode } from 'react';
+import { ApiError } from '@/shared/api';
+import { humanizeErrorPresentation } from '@/shared/model';
 
 function PageLayoutWrapper({
   children,
@@ -92,14 +94,27 @@ function PageLayoutContent<T extends React.ElementType = 'div'>({
   );
 }
 
-function PageLayoutError({ error }: { error: { message: string } | null | undefined }) {
+function PageLayoutError({
+  error,
+  media,
+  action,
+}: {
+  error: { message: string } | null | undefined;
+  media?: ReactNode;
+  action?: ReactNode;
+}) {
+  if (!error) return null;
+
+  const presentation =
+    error instanceof ApiError ? humanizeErrorPresentation(error) : { description: error.message };
+
   return (
-    <PageLayoutContent data-slot="page-layout-error">
-      <Alert variant="destructive">
-        <LucideInfo />
-        <AlertDescription>{error?.message}</AlertDescription>
-      </Alert>
-    </PageLayoutContent>
+    <Alert variant="destructive" data-slot="page-layout-error">
+      {media ?? <LucideInfo />}
+      {presentation.title && <AlertTitle>{presentation.title}</AlertTitle>}
+      <AlertDescription>{presentation.description}</AlertDescription>
+      {action && <AlertAction>{action}</AlertAction>}
+    </Alert>
   );
 }
 

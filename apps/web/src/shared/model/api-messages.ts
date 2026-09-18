@@ -43,3 +43,26 @@ export function humanizeApiError(
 ): string {
   return overrides?.[error.code] ?? DEFAULT_MESSAGES[error.code] ?? error.message;
 }
+
+export type ErrorPresentation = { title?: string; description: string };
+
+export function humanizeErrorPresentation(error: ApiError): ErrorPresentation {
+  switch (error.code) {
+    case 'QUOTE_EXPIRED':
+      return {
+        title: 'Расчёт устарел',
+        description: 'Рассчитайте доставку заново, чтобы создать заказ.',
+      };
+    case 'QUOTE_NOT_FOUND':
+      return {
+        title: 'Расчёт не найден',
+        description: 'Пересчитайте доставку, чтобы продолжить оформление.',
+      };
+    case 'CART_VERSION_CONFLICT':
+      return { title: 'Корзина изменилась', description: 'Обновите её и повторите действие.' };
+    case 'PRECONDITION_FAILED':
+      return { title: 'Данные изменились', description: 'Обновите страницу и попробуйте снова.' };
+    default:
+      return { description: error.message };
+  }
+}

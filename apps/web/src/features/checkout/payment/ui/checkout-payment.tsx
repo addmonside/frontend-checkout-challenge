@@ -1,75 +1,54 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { useCheckoutOptions } from '../../common/use-checkout-options';
-import { CartEmpty, CartList } from '@/services/cart';
+import { CartEmpty } from '@/services/cart';
 import { ButtonLink } from '@/shared/ui/button-link';
 import { routes } from '@/shared/model';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
-import { CheckoutInfo } from '../../common/checkout-info';
-import { CheckoutPaymentMethod } from './checkout-payment-method';
-import { CheckoutPaymentCustomerForm } from './checkout-payment-customer-form';
 import { useQuote } from '../model/use-qoute';
+import { useCreateOrder } from '../model/use-create-order';
+import { CheckoutPaymentStatus } from './checkout-payment-status';
+import { CheckoutPaymentContent } from './checkout-payment-content';
 
 export function CheckoutPayment({ quoteId }: { quoteId: string }) {
+  const router = useRouter();
   const { paymentMethods, isPending } = useCheckoutOptions();
-  const { quote, isPending: isPendingQuote } = useQuote(quoteId);
+  const { quote, isPending: isPendingQuote, error: quoteError } = useQuote(quoteId);
+  const { createOrder, isPending: isPendingCheckout, error: orderError } = useCreateOrder(quoteId);
 
-  // const {
-  //   createCheckout,
-  //   isPending: isPendingCheckout,
-  //   fieldErrors,
-  // } = useCreateCheckout(cart?.version || 0);
+  // ! расчёт удалён или недоступен — вернуться на шаг доставки
+  const quoteLoadStale = !!quoteError?.isStaleData;
+
+  useEffect(() => {
+    if (quoteLoadStale) router.replace(routes.CHECKOUT);
+  }, [quoteLoadStale, router]);
+
+  if (quoteLoadStale) return null;
+
+  const goToCheckout = () => router.push(routes.CHECKOUT);
 
   return isPending && isPendingQuote ? (
     <div>Loading...</div>
   ) : !!quote?.items.length && paymentMethods ? (
-    <PageLayout.Content variant="checkout">
-      <Card>
-        <CardHeader>
-          <CardTitle>Товары</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CartList items={quote.items} currency={quote.currency} />
-        </CardContent>
-      </Card>
-      <div className="sticky top-0 z-20 h-fit">
-        <CheckoutPaymentMethod
+    <>
+      <PageLayout.Content>
+        <CheckoutPaymentStatus expiresAt={quote.expiresAt} onRecalculate={goToCheckout} />
+      </PageLayout.Content>
+      <PageLayout.Content>
+        <PageLayout.Error error={orderError || quoteError} />
+      </PageLayout.Content>
+      <PageLayout.Content variant="checkout">
+        <CheckoutPaymentContent
+          quote={quote}
           paymentMethods={paymentMethods}
-          // error={fieldErrors['delivery.method']}
+          isPending={isPendingCheckout}
+          onSubmit={createOrder}
         />
-        <CheckoutPaymentCustomerForm
-          info={
-            <CheckoutInfo
-              subtotal={quote.subtotal}
-              currency={quote.currency}
-              shipping={quote.shipping}
-              total={quote.total}
-            />
-          }
-          onSubmit={() => console.log()}
-          // onSubmit={createCheckout}
-          // errors={{
-          //   pickupPointId: fieldErrors['delivery.pickupPointId'],
-          //   city: fieldErrors['delivery.address.city'],
-          //   street: fieldErrors['delivery.address.street'],
-          //   house: fieldErrors['delivery.address.house'],
-          //   apartment: fieldErrors['delivery.address.apartment'],
-          // }}
-          // action={(props) => (
-          //   <Button
-          //     variant="checkout"
-          //     onClick={createCheckout}
-          //     isPending={isPendingCheckout}
-          //     {...props}
-          //   >
-          //     Оформить
-          //   </Button>
-          // )}
-        />
-      </div>
-    </PageLayout.Content>
+      </PageLayout.Content>
+    </>
   ) : (
-    <CartEmpty renderAction={<ButtonLink href={routes.HOME}>За покупками</ButtonLink>} />
+    <CartEmpty renderAction={<ButtonLink href={routes.HOME}> покупками</ButtonLink>} />
   );
 }
