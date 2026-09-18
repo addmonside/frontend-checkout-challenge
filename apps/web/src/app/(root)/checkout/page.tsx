@@ -1,7 +1,6 @@
-import { Checkout } from '@/features/checkout';
+import { CheckoutDelivery } from '@/features/checkout';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Оформление | Some Shop',
@@ -14,9 +13,7 @@ export default function CheckoutPage() {
       <PageLayout.Header>
         <PageLayout.Title>Оформление заказа</PageLayout.Title>
       </PageLayout.Header>
-      <Suspense fallback={<div>loading...</div>}>
-        <Checkout />
-      </Suspense>
+      <CheckoutDelivery />
     </PageLayout>
   );
 }

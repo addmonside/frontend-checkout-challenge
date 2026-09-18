@@ -10,7 +10,7 @@ services:
       HOST: 0.0.0.0
       PORT: '4000'
       DATA_FILE: /app/.data/store.json
-      PAYMENT_DELAY_MS: '1200'
+      PAYMENT_DELAY_MS: '3000'
     volumes:
       - api-data:/app/.data
     restart: unless-stopped

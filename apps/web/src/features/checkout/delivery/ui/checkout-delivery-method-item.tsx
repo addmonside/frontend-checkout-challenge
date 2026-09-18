@@ -4,7 +4,7 @@ import { ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/shared/ui/kit/item';
 import { Price } from '@/shared/ui/price';
 
-export function CheckoutDeliveryItem({
+export function CheckoutDeliveryMethodItem({
   id,
   title,
   price,

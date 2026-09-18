@@ -38,7 +38,7 @@ export function CartContent({
             <Price value={subtotal} currency={currency} />
           </strong>
         </p>
-        <SheetClose render={<ButtonLink href={routes.CHECKOUT}>Оформить заказ</ButtonLink>} />
+        <SheetClose render={<ButtonLink href={routes.CHECKOUT}>Перейти к оформлению</ButtonLink>} />
         <SheetClose render={<Button variant="outline">Закрыть</Button>} />
       </SheetFooter>
     </>

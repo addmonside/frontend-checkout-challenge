@@ -1,0 +1,58 @@
+'use client';
+
+import { useAtomValue } from 'jotai/react';
+import { checkoutDeliveryMethodAtom } from '../model/checkout-delivery-atom';
+import { CheckoutDeliveryAddressPickup } from './checkout-delivery-address-pickup';
+import { CheckoutDeliveryAddressCourier } from './checkout-delivery-address-courier';
+import { Card, CardFooter, CardHeader, CardTitle } from '@/shared/ui/kit/card';
+import { Field } from '@/shared/ui/kit/field';
+import { ComponentProps } from 'react';
+
+export function CheckoutDeliveryAddress({
+  info,
+  action: Action,
+  errors,
+}: {
+  info: React.ReactNode;
+  action: React.FC<ComponentProps<'button'>>;
+  errors?: {
+    pickupPointId?: string;
+    city?: string;
+    street?: string;
+    house?: string;
+    apartment?: string;
+  };
+}) {
+  const method = useAtomValue(checkoutDeliveryMethodAtom);
+  const title = method?.id === 'pickup' ? 'Пункт выдачи' : 'Адрес доставки';
+
+  return (
+    <Card className="flex-1">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      {method && method.id === 'pickup' && (
+        <CheckoutDeliveryAddressPickup
+          pickupPoints={method.pickupPoints}
+          error={errors?.pickupPointId}
+        />
+      )}
+      {method && method.id === 'courier' && (
+        <CheckoutDeliveryAddressCourier
+          errors={{
+            city: errors?.city,
+            street: errors?.street,
+            house: errors?.house,
+            apartment: errors?.apartment,
+          }}
+        />
+      )}
+      <CardFooter>
+        <Field>
+          {info}
+          <Action type="submit" form="checkout-customer-form" />
+        </Field>
+      </CardFooter>
+    </Card>
+  );
+}

@@ -3,11 +3,11 @@
 import { ToggleGroup } from '@/shared/ui/kit/toggle-group';
 import { GetCheckoutOptions200DataPaymentMethodsItem } from '@/shared/api/gen/model';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
-import { CheckoutPaymentItem } from './checkout-payment-item';
+import { CheckoutPaymentMethodItem } from './checkout-payment-method-item';
 import { useAtom } from 'jotai/react';
 import { checkoutPaymentAtom } from '../model/checkout-payment-atom';
 
-export function CheckoutPayment({
+export function CheckoutPaymentMethod({
   paymentMethods,
 }: {
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[] | undefined;
@@ -32,7 +32,7 @@ export function CheckoutPayment({
             variant="checkout"
           >
             {paymentMethods.map((item) => (
-              <CheckoutPaymentItem key={item.id} id={item.id} title={item.title} />
+              <CheckoutPaymentMethodItem key={item.id} id={item.id} title={item.title} />
             ))}
           </ToggleGroup>
         ) : (

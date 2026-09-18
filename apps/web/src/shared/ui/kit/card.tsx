@@ -65,9 +65,20 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
+function CardContent<T extends React.ElementType = 'div'>({
+  className,
+  as,
+  ...props
+}: {
+  as?: T;
+} & Omit<React.ComponentProps<T>, 'as'>) {
+  const Component = as ?? 'div';
   return (
-    <div data-slot="card-content" className={cn('px-(--card-spacing)', className)} {...props} />
+    <Component
+      data-slot="card-content"
+      className={cn('px-(--card-spacing) grid gap-2.5', className)}
+      {...props}
+    />
   );
 }
 
@@ -76,7 +87,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="card-footer"
       className={cn(
-        'flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)',
+        'flex items-center rounded-xl border-t bg-muted/50 p-(--card-spacing)',
         className,
       )}
       {...props}

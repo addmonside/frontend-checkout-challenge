@@ -37,12 +37,14 @@ function ToggleGroup({
   variant,
   spacing = 2,
   orientation = 'horizontal',
+  hasError,
   children,
   ...props
 }: ToggleGroupPrimitive.Props &
   VariantProps<typeof toggleVariants> & {
     spacing?: number;
     orientation?: 'horizontal' | 'vertical';
+    hasError?: boolean;
   }) {
   return (
     <ToggleGroupPrimitive
@@ -51,7 +53,10 @@ function ToggleGroup({
       data-spacing={spacing}
       data-orientation={orientation}
       style={{ '--gap': spacing } as React.CSSProperties}
-      className={cn(toggleGroupVariants({ variant, className }))}
+      className={cn(
+        toggleGroupVariants({ variant, className }),
+        hasError && 'border border-destructive bg-destructive/10 text-destructive-foreground',
+      )}
       {...props}
     >
       <ToggleGroupContext.Provider value={{ variant, spacing, orientation }}>
