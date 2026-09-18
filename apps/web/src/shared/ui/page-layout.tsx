@@ -65,7 +65,7 @@ function PageLayoutHeader({ className, ...props }: React.ComponentProps<'header'
 const pageLayoutContentVariants = cva('', {
   variants: {
     variant: {
-      default: 'flex flex-col gap-12',
+      default: 'flex flex-1 flex-col gap-12',
       centered: 'flex flex-1 flex-col items-center justify-center gap-12',
       checkout: 'grid gap-12 md:grid-cols-[4fr_5fr]',
     },

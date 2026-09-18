@@ -1,17 +1,11 @@
 import { LucideClock } from 'lucide-react';
 import { useCountdown } from '@/shared/lib';
-import { appConfig } from '@/shared/model';
+import { appConfig, routes } from '@/shared/model';
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '@/shared/ui/kit/alert';
-import { Button } from '@/shared/ui/kit/button';
 import { Timer } from '@/shared/ui/timer';
+import { ButtonLink } from '@/shared/ui/button-link';
 
-export function CheckoutPaymentStatus({
-  expiresAt,
-  onRecalculate,
-}: {
-  expiresAt: string;
-  onRecalculate: () => void;
-}) {
+export function CheckoutPaymentStatus({ expiresAt }: { expiresAt: string }) {
   const { remainingMinutes, isExpired } = useCountdown(expiresAt);
 
   if (remainingMinutes > appConfig.QUOTE_WARNING_MINUTES) return null;
@@ -34,9 +28,9 @@ export function CheckoutPaymentStatus({
           : 'Время подтверждения заказа ограничено, не затягивайте.'}
       </AlertDescription>
       <AlertAction>
-        <Button variant="outline" className="h-7" onClick={onRecalculate}>
+        <ButtonLink href={routes.CHECKOUT} variant="outline" className="h-7">
           Рассчитать заново
-        </Button>
+        </ButtonLink>
       </AlertAction>
     </Alert>
   );

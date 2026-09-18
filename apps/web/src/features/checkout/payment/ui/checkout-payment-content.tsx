@@ -15,11 +15,13 @@ export function CheckoutPaymentContent({
   paymentMethods,
   onSubmit,
   isPending,
+  fieldErrors,
 }: {
   quote: GetQuote200Data;
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[];
   onSubmit: (customer: CreateOrderBody['customer']) => void;
   isPending: boolean;
+  fieldErrors: Record<string, string>;
 }) {
   return (
     <>
@@ -31,10 +33,10 @@ export function CheckoutPaymentContent({
           <CartList items={quote.items} currency={quote.currency} hiddenActions />
         </CardContent>
       </Card>
-      <div className="sticky top-0 z-20 h-fit">
+      <div className="sticky top-0 z-20 h-fit flex-1">
         <CheckoutPaymentMethod
           paymentMethods={paymentMethods}
-          // error={fieldErrors['delivery.method']}
+          error={fieldErrors['paymentMethod']}
         />
         <CheckoutPaymentCustomerForm
           info={
@@ -46,13 +48,6 @@ export function CheckoutPaymentContent({
             />
           }
           onSubmit={onSubmit}
-          // errors={{
-          //   pickupPointId: fieldErrors['delivery.pickupPointId'],
-          //   city: fieldErrors['delivery.address.city'],
-          //   street: fieldErrors['delivery.address.street'],
-          //   house: fieldErrors['delivery.address.house'],
-          //   apartment: fieldErrors['delivery.address.apartment'],
-          // }}
           action={(props) => (
             <Button variant="checkout" isPending={isPending} {...props}>
               Сохранить

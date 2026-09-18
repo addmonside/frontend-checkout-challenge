@@ -1,8 +1,10 @@
 import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { toApiError, useCreateOrder as useCreateOrderApi } from '@/shared/api';
 import { CreateOrderBody } from '@/shared/api/gen/model';
 import { checkoutPaymentAtom } from './checkout-payment-atom';
+
+// todo надо ли переносить логику в заказы???
 
 export function useCreateOrder(quoteId: string) {
   // ! ключ генерируется один раз на хук для идемпотентности
@@ -21,10 +23,21 @@ export function useCreateOrder(quoteId: string) {
     },
   });
   const paymentMethod = useAtomValue(checkoutPaymentAtom);
+  const [attempted, setAttempted] = useState(false);
 
-  const createOrder = async (customer: CreateOrderBody['customer']) => {
-    mutate({ data: { quoteId, customer, paymentMethod: paymentMethod! } });
+  const fieldErrors = useMemo<Record<string, string>>(() => {
+    const clientErrors: Record<string, string> =
+      attempted && !paymentMethod ? { paymentMethod: 'Выберите способ оплаты' } : {};
+    const apiFieldErrors = toApiError(rawError)?.toFieldErrorMap() ?? {};
+    return { ...clientErrors, ...apiFieldErrors };
+  }, [attempted, paymentMethod, rawError]);
+
+  const createOrder = (customer: CreateOrderBody['customer']) => {
+    setAttempted(true);
+
+    if (!paymentMethod) return;
+    mutate({ data: { quoteId, customer, paymentMethod } });
   };
 
-  return { createOrder, isPending, error: toApiError(rawError) };
+  return { createOrder, isPending, error: toApiError(rawError), fieldErrors };
 }

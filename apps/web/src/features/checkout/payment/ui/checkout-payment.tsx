@@ -18,11 +18,16 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
   const goToErrorPage = useErrorPageRedirect();
   const { paymentMethods, isPending, error: checkoutError } = useCheckoutOptions();
   const { quote, isPending: isPendingQuote, error: quoteError, isSlateData } = useQuote(quoteId);
-  const { createOrder, isPending: isPendingCheckout, error: orderError } = useCreateOrder(quoteId);
+  const {
+    createOrder,
+    isPending: isPendingCheckout,
+    error: orderError,
+    fieldErrors,
+  } = useCreateOrder(quoteId);
 
   const isNotFound = quoteError?.status === 404;
   const isStaleReload = isSlateData && !isNotFound;
-  const error = orderError || quoteError || checkoutError;
+  const error = orderError?.isValidation ? undefined : orderError || quoteError || checkoutError;
 
   useEffect(() => {
     if (isNotFound) {
@@ -35,9 +40,7 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
     }
   }, [goToErrorPage, isNotFound, isSlateData, isStaleReload, quoteError, router]);
 
-  if (isNotFound || isStaleReload) return null; // защита от флеша перед редиректом
-
-  const goToCheckout = () => router.push(routes.CHECKOUT);
+  if (isNotFound || isStaleReload) return null; // защита от моргания перед редиректом
 
   return isPending && isPendingQuote ? (
     <div>Loading...</div>
@@ -49,7 +52,7 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
       {!!quote?.items.length && paymentMethods ? (
         <>
           <PageLayout.Content>
-            <CheckoutPaymentStatus expiresAt={quote.expiresAt} onRecalculate={goToCheckout} />
+            <CheckoutPaymentStatus expiresAt={quote.expiresAt} />
           </PageLayout.Content>
           <PageLayout.Content variant="checkout">
             <CheckoutPaymentContent
@@ -57,6 +60,7 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
               paymentMethods={paymentMethods}
               isPending={isPendingCheckout}
               onSubmit={createOrder}
+              fieldErrors={fieldErrors}
             />
           </PageLayout.Content>
         </>

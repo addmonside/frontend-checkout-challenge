@@ -33,6 +33,7 @@ function formatDuration(ms: number, style: DurationStyle = 'narrow', locale = 'r
       : style === 'short'
         ? 'мин.'
         : 'мин';
+  if (hours === 0) return `${minutes} ${minuteLabel}`;
   return `${hours} ${hourLabel} ${minutes} ${minuteLabel}`;
 }
 
@@ -43,3 +44,8 @@ function pluralize(count: number, [one, few, many]: [string, string, string]) {
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
   return many;
 }
+
+// narrow	1ч 2м
+// short	1 ч 2 мин
+// long	1 час 2 минуты
+// clock	1:02
