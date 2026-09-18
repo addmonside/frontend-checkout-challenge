@@ -15,6 +15,7 @@ export function CartListItem({
   lineTotal,
   currency,
   stock,
+  hiddenActions,
 }: {
   productId: string;
   title: string;
@@ -23,6 +24,7 @@ export function CartListItem({
   lineTotal: number;
   currency: string;
   stock: number;
+  hiddenActions?: boolean;
 }) {
   return (
     <Item variant="cart-item" as="li">
@@ -32,11 +34,13 @@ export function CartListItem({
           <Price value={lineTotal} currency={currency} />
         </ItemDescription>
       </ItemContent>
-      <ItemFooter>
-        <ItemActions>
-          <CartAdditionButton productId={productId} stock={stock} />
-        </ItemActions>
-      </ItemFooter>
+      {hiddenActions ?? (
+        <ItemFooter>
+          <ItemActions>
+            <CartAdditionButton productId={productId} stock={stock} />
+          </ItemActions>
+        </ItemFooter>
+      )}
     </Item>
   );
 }

@@ -5,9 +5,11 @@ import { ItemGroup } from '@/shared/ui/kit/item';
 export function CartList({
   items,
   currency,
+  hiddenActions,
 }: {
   items: GetCart200DataItemsItem[];
   currency: string;
+  hiddenActions?: boolean;
 }) {
   return (
     <ItemGroup as="ul" variant="cart-list">
@@ -21,6 +23,7 @@ export function CartList({
           lineTotal={item.lineTotal}
           currency={currency}
           stock={item.stock}
+          hiddenActions={hiddenActions}
         />
       ))}
     </ItemGroup>
