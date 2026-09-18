@@ -1,22 +1,27 @@
 import { CardDescription, CardTitle } from '@/shared/ui/kit/card';
 import { Price } from '@/shared/ui/price';
-import { useAtomValue } from 'jotai';
-import { checkoutDeliveryMethodAtom } from '../delivery/model/checkout-delivery-atom';
 
-export function CheckoutInfo({ subtotal, currency }: { subtotal: number; currency: string }) {
-  const method = useAtomValue(checkoutDeliveryMethodAtom);
-  const delivery = !method || (method?.freeFrom ?? 0) < subtotal ? 0 : method.price;
-
+export function CheckoutInfo({
+  subtotal,
+  currency,
+  shipping,
+  total,
+}: {
+  subtotal: number;
+  currency: string;
+  shipping: number;
+  total: number;
+}) {
   return (
     <>
       <CardDescription>
         Общая сумма: <Price value={subtotal} currency={currency} />
       </CardDescription>
       <CardDescription>
-        Доставка: <Price value={delivery} currency={currency} />
+        Доставка: <Price value={shipping} currency={currency} />
       </CardDescription>
       <CardTitle>
-        Итого: <Price value={subtotal + delivery} currency={currency} />
+        Итого: <Price value={total} currency={currency} />
       </CardTitle>
     </>
   );

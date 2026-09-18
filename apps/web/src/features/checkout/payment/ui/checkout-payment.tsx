@@ -7,28 +7,30 @@ import { ButtonLink } from '@/shared/ui/button-link';
 import { routes } from '@/shared/model';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { CheckoutInfo } from '../../common/checkout-info';
-import { useCreateCheckout } from '../../delivery/model/use-create-quote';
 import { CheckoutPaymentMethod } from './checkout-payment-method';
 import { CheckoutPaymentCustomerForm } from './checkout-payment-customer-form';
+import { useQuote } from '../model/use-qoute';
 
 export function CheckoutPayment({ quoteId }: { quoteId: string }) {
-  const { paymentMethods, cart, isPending } = useCheckoutOptions();
-  const {
-    createCheckout,
-    isPending: isPendingCheckout,
-    fieldErrors,
-  } = useCreateCheckout(cart?.version || 0);
+  const { paymentMethods, isPending } = useCheckoutOptions();
+  const { quote, isPending: isPendingQuote } = useQuote(quoteId);
 
-  return isPending ? (
+  // const {
+  //   createCheckout,
+  //   isPending: isPendingCheckout,
+  //   fieldErrors,
+  // } = useCreateCheckout(cart?.version || 0);
+
+  return isPending && isPendingQuote ? (
     <div>Loading...</div>
-  ) : !!cart?.items.length && paymentMethods ? (
+  ) : !!quote?.items.length && paymentMethods ? (
     <PageLayout.Content variant="checkout">
       <Card>
         <CardHeader>
           <CardTitle>Товары</CardTitle>
         </CardHeader>
         <CardContent>
-          <CartList items={cart.items} currency={cart.currency} />
+          <CartList items={quote.items} currency={quote.currency} />
         </CardContent>
       </Card>
       <div className="sticky top-0 z-20 h-fit">
@@ -37,8 +39,16 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
           // error={fieldErrors['delivery.method']}
         />
         <CheckoutPaymentCustomerForm
-          info={<CheckoutInfo subtotal={cart.subtotal} currency={cart.currency} />}
-          onSubmit={createCheckout}
+          info={
+            <CheckoutInfo
+              subtotal={quote.subtotal}
+              currency={quote.currency}
+              shipping={quote.shipping}
+              total={quote.total}
+            />
+          }
+          onSubmit={() => console.log()}
+          // onSubmit={createCheckout}
           // errors={{
           //   pickupPointId: fieldErrors['delivery.pickupPointId'],
           //   city: fieldErrors['delivery.address.city'],

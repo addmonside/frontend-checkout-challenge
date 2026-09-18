@@ -8,9 +8,9 @@ import { ButtonLink } from '@/shared/ui/button-link';
 import { routes } from '@/shared/model';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { CheckoutDeliveryAddress } from './checkout-delivery-address';
-import { CheckoutInfo } from '../../common/checkout-info';
 import { useCreateCheckout } from '../model/use-create-quote';
 import { Button } from '@/shared/ui/kit/button';
+import { CheckoutDeliveryInfo } from './checkout-delivery-info';
 
 export function CheckoutDelivery() {
   const { deliveryMethods, cart, isPending } = useCheckoutOptions();
@@ -38,7 +38,7 @@ export function CheckoutDelivery() {
           error={fieldErrors['delivery.method']}
         />
         <CheckoutDeliveryAddress
-          info={<CheckoutInfo subtotal={cart.subtotal} currency={cart.currency} />}
+          info={<CheckoutDeliveryInfo subtotal={cart.subtotal} currency={cart.currency} />}
           errors={{
             pickupPointId: fieldErrors['delivery.pickupPointId'],
             city: fieldErrors['delivery.address.city'],
