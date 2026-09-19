@@ -15,7 +15,7 @@ export function useErrorPageRedirect() {
     (error: Error) => {
       const id = error instanceof ApiError ? error.code : 'GENERAL_ERROR';
       setError(error);
-      router.replace(routes.ERROR_PAGE.replace('[id]', id));
+      router.replace(routes.error(id));
     },
     [router, setError],
   );
