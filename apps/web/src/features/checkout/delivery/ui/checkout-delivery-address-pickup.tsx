@@ -8,16 +8,16 @@ import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
 export function CheckoutDeliveryAddressPickup({
   pickupPoints,
   value,
-  onChange,
+  onChangeAction,
   error,
 }: {
   pickupPoints: GetCheckoutOptions200DataDeliveryMethodsItemPickupPointsItem[];
   value: string | undefined;
-  onChange: (value: string) => void;
+  onChangeAction: (value: string) => void;
   error?: string;
 }) {
   const handleSelectPoint = (ids: string[]) => {
-    onChange(ids[0] ?? '');
+    onChangeAction(ids[0] ?? '');
   };
 
   return (

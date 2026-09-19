@@ -13,18 +13,18 @@ import { CheckoutPaymentForm } from './checkout-payment-form';
 export function CheckoutPaymentContent({
   quote,
   paymentMethods,
-  onSubmit,
+  onSubmitAction,
   isPending,
   fieldErrors,
 }: {
   quote: GetQuote200Data;
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[];
-  onSubmit: (v: CreateOrderBody) => void;
+  onSubmitAction: (v: CreateOrderBody) => void;
   isPending: boolean;
   fieldErrors: Record<string, string>;
 }) {
   const handleSubmit = (values: CheckoutPaymentFormValues) => {
-    onSubmit({ quoteId: quote.id, ...values });
+    onSubmitAction({ quoteId: quote.id, ...values });
   };
 
   return (
@@ -43,7 +43,7 @@ export function CheckoutPaymentContent({
           paymentMethods={paymentMethods}
           isPending={isPending}
           fieldErrors={fieldErrors}
-          onSubmit={handleSubmit}
+          onSubmitAction={handleSubmit}
         />
       </div>
     </>

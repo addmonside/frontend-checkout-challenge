@@ -56,7 +56,7 @@ export function CheckoutDelivery() {
           subtotal={cart.subtotal}
           currency={cart.currency}
           isPending={isPendingCheckout}
-          onSubmit={handleSubmit}
+          onSubmitAction={handleSubmit}
         />
       </div>
     </PageLayout.Content>

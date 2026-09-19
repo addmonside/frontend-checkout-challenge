@@ -45,7 +45,7 @@ export function CheckoutPayment({ quoteId }: { quoteId: string }) {
               paymentMethods={paymentMethods}
               isPending={isPendingCheckout}
               fieldErrors={fieldErrors}
-              onSubmit={createOrder}
+              onSubmitAction={createOrder}
             />
           </PageLayout.Content>
         </>

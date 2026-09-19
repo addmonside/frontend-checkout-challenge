@@ -32,7 +32,7 @@ export function CheckoutDeliveryAddress({
               <CheckoutDeliveryAddressPickup
                 pickupPoints={pickupPoints}
                 value={field.value}
-                onChange={field.onChange}
+                onChangeAction={field.onChange}
                 error={fieldState.error?.message}
               />
             )}

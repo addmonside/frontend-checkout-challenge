@@ -10,17 +10,17 @@ import { CheckoutPaymentMethodItem } from './checkout-payment-method-item';
 export function CheckoutPaymentMethod({
   paymentMethods,
   value,
-  onChange,
+  onChangeAction,
   error,
 }: {
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[] | undefined;
   value: CreateOrderBody['paymentMethod'] | undefined;
-  onChange: (value: CreateOrderBody['paymentMethod'] | undefined) => void;
+  onChangeAction: (value: CreateOrderBody['paymentMethod'] | undefined) => void;
   error?: string;
 }) {
   const handleSelectMethod = (ids: string[]) => {
     const method = paymentMethods?.find((item) => ids.includes(item.id));
-    onChange((method?.id as CreateOrderBody['paymentMethod'] | undefined) ?? undefined);
+    onChangeAction((method?.id as CreateOrderBody['paymentMethod'] | undefined) ?? undefined);
   };
 
   return (

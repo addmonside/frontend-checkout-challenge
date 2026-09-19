@@ -21,17 +21,17 @@ export function CheckoutPaymentForm({
   paymentMethods,
   isPending,
   fieldErrors,
-  onSubmit,
+  onSubmitAction,
 }: {
   quote: GetQuote200Data;
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[] | undefined;
   isPending: boolean;
   fieldErrors: Record<string, string>;
-  onSubmit: (values: CheckoutPaymentFormValues) => void;
+  onSubmitAction: (values: CheckoutPaymentFormValues) => void;
 }) {
   const { form } = useCheckoutPaymentForm(fieldErrors);
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+    <form noValidate onSubmit={form.handleSubmit(onSubmitAction)}>
       <Controller
         name="paymentMethod"
         control={form.control}
@@ -39,7 +39,7 @@ export function CheckoutPaymentForm({
           <CheckoutPaymentMethod
             paymentMethods={paymentMethods}
             value={field.value}
-            onChange={field.onChange}
+            onChangeAction={field.onChange}
             error={fieldState.error?.message}
           />
         )}

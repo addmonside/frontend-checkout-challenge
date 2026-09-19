@@ -9,17 +9,17 @@ import { CheckoutDeliveryMethodItem } from './checkout-delivery-method-item';
 export function CheckoutDeliveryMethod({
   deliveryMethods,
   value,
-  onChange,
+  onChangeAction,
   error,
 }: {
   deliveryMethods: GetCheckoutOptions200DataDeliveryMethodsItem[];
   value: string | undefined;
-  onChange: (value: string) => void;
+  onChangeAction: (value: string) => void;
   error?: string;
 }) {
   const handleSelectMethod = (ids: string[]) => {
     const method = deliveryMethods.find((item) => ids.includes(item.id));
-    onChange(method?.id ?? '');
+    onChangeAction(method?.id ?? '');
   };
 
   return (

@@ -16,21 +16,21 @@ export function CheckoutDeliveryForm({
   subtotal,
   currency,
   isPending,
-  onSubmit,
+  onSubmitAction,
 }: {
   form: UseFormReturn<CheckoutDeliveryFormValues>;
   deliveryMethods: GetCheckoutOptions200DataDeliveryMethodsItem[];
   subtotal: number;
   currency: string;
   isPending: boolean;
-  onSubmit: (values: CheckoutDeliveryFormValues) => void;
+  onSubmitAction: (values: CheckoutDeliveryFormValues) => void;
 }) {
   const method = useWatch({ control: form.control, name: 'delivery.method' });
   const selectedMethod = deliveryMethods.find((item) => item.id === method);
   const pickupPoints = selectedMethod?.pickupPoints ?? [];
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+    <form noValidate onSubmit={form.handleSubmit(onSubmitAction)}>
       <Controller
         name="delivery.method"
         control={form.control}
@@ -38,7 +38,7 @@ export function CheckoutDeliveryForm({
           <CheckoutDeliveryMethod
             deliveryMethods={deliveryMethods}
             value={field.value}
-            onChange={field.onChange}
+            onChangeAction={field.onChange}
             error={fieldState.error?.message}
           />
         )}
