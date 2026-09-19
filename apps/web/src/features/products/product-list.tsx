@@ -4,9 +4,8 @@ import { LucideShoppingBag } from 'lucide-react';
 import { cacheLife } from 'next/cache';
 import { fetchServer } from '@/shared/api/fetch/fetch-server';
 import { ListProducts200 } from '@/shared/api/gen/model';
-import { ItemGroup } from '@/shared/ui/kit/item';
 import { PageLayout } from '@/shared/ui/page-layout';
-import { ProductListItem } from './product-list-item';
+import { ProductListGrid } from './product-list-grid';
 
 export async function ProductList({ token }: { token: string }) {
   cacheLife('minutes');
@@ -16,19 +15,7 @@ export async function ProductList({ token }: { token: string }) {
   });
 
   return !!data.data.length ? (
-    <ItemGroup variant="product-list" as="ul">
-      {data.data.map((product) => (
-        <ProductListItem
-          key={product.id}
-          productId={product.id}
-          title={product.title}
-          price={product.price}
-          description={product.description}
-          stock={product.stock}
-          currency={product.currency}
-        />
-      ))}
-    </ItemGroup>
+    <ProductListGrid products={data.data} />
   ) : (
     <PageLayout.Empty
       title="Нет доступных товаров"

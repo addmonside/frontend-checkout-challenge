@@ -11,7 +11,7 @@ import {
 } from '@/shared/ui/kit/item';
 import { Price } from '@/shared/ui/price';
 
-export function ProductListItem({
+export function ProductListGridItem({
   productId,
   title,
   description,
