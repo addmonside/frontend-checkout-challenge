@@ -15,7 +15,7 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40 h-8',
         'header-icon-ghost':
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-12 h-8 [&_svg:not([class*='size-'])]:size-8",
+          "aria-expanded:bg-muted aria-expanded:text-foreground size-14 hover:scale-115 [&_svg:not([class*='size-'])]:size-8",
         checkout: 'bg-primary text-primary-foreground hover:bg-primary/80 h-16 w-full text-2xl',
       },
     },

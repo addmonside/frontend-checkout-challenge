@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { PageLayout } from '@/shared/ui/page-layout';
+import { OrderList, OrderListSkeleton } from '@/features/orders';
 
 export const metadata: Metadata = {
   title: 'Заказы | Some Shop',
@@ -13,7 +14,11 @@ export default function CheckoutPage() {
       <PageLayout.Header>
         <PageLayout.Title>Заказы</PageLayout.Title>
       </PageLayout.Header>
-      <Suspense fallback={<div>loading...</div>}>список заказов</Suspense>
+      <PageLayout.Content>
+        <Suspense fallback={<OrderListSkeleton />}>
+          <OrderList />
+        </Suspense>
+      </PageLayout.Content>
     </PageLayout>
   );
 }

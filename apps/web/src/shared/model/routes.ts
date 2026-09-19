@@ -1,6 +1,8 @@
 export const routes = {
   HOME: '/',
   CHECKOUT: '/checkout',
-  CHECKOUT_QUOTE: '/checkout/[quoteId]',
-  ERROR_PAGE: '/error/[id]',
+  checkoutQuote: (id: string | number) => `/checkout/${encodeURIComponent(id)}`,
+  error: (id: string | number) => `/error/${encodeURIComponent(id)}`,
+  ORDERS: '/orders',
+  order: (id: string | number) => `/orders/${encodeURIComponent(id)}`,
 } as const;

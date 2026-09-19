@@ -109,12 +109,14 @@ function PageLayoutError({
     error instanceof ApiError ? humanizeErrorPresentation(error) : { description: error.message };
 
   return (
-    <Alert variant="destructive" data-slot="page-layout-error">
-      {media ?? <LucideInfo />}
-      {presentation.title && <AlertTitle>{presentation.title}</AlertTitle>}
-      <AlertDescription>{presentation.description}</AlertDescription>
-      {action && <AlertAction>{action}</AlertAction>}
-    </Alert>
+    <PageLayoutContent>
+      <Alert variant="destructive" data-slot="page-layout-error">
+        {media ?? <LucideInfo />}
+        {presentation.title && <AlertTitle>{presentation.title}</AlertTitle>}
+        <AlertDescription>{presentation.description}</AlertDescription>
+        {action && <AlertAction>{action}</AlertAction>}
+      </Alert>
+    </PageLayoutContent>
   );
 }
 
