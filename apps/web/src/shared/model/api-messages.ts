@@ -26,6 +26,9 @@ export const DEFAULT_MESSAGES: Record<string, string> = {
 
   // Оплата
   PAYMENT_NOT_REQUIRED: 'Оплата для этого заказа не требуется',
+  PAYMENT_NOT_FOUND: 'Попытка оплаты не найдена',
+  PAYMENT_FINALIZED: 'Оплата уже завершена, создайте новую попытку',
+  SIMULATION_NOT_FOUND: 'Имитация оплаты не найдена',
   ORDER_ALREADY_PAID: 'Заказ уже оплачен',
   PAYMENT_IN_PROGRESS: 'Платёж уже обрабатывается, подождите',
 

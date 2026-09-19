@@ -7,9 +7,9 @@ import { PageLayout } from '@/shared/ui/page-layout';
 import { Timer } from '@/shared/ui/timer';
 
 export function CheckoutPaymentStatus({ expiresAt }: { expiresAt: string }) {
-  const { remainingMinutes, isExpired } = useCountdown(expiresAt);
+  const { remainingMs, isExpired } = useCountdown(expiresAt);
 
-  if (remainingMinutes > appConfig.QUOTE_WARNING_MINUTES) return null;
+  if (remainingMs > appConfig.DISPLAY_QUOTE_WARNING_AFTER_MS) return null;
 
   return (
     <PageLayout.Content>

@@ -1,54 +1,98 @@
 'use client';
 
+import { ReactNode } from 'react';
 import { GetOrder200Data } from '@/shared/api/gen/model';
 import { Alert, AlertDescription, AlertTitle } from '@/shared/ui/kit/alert';
 import { Button } from '@/shared/ui/kit/button';
-import { getOrderPaymentAction } from '../common/order-payment-action';
+
+export type OrderPaymentAction = 'cash' | 'paid' | 'pending' | 'pay' | 'retry';
 
 export function OrderActions({
   order,
-  onPay,
-  onRefresh,
+  onPayAction,
+  onRefreshAction,
 }: {
   order: GetOrder200Data;
-  onPay?: () => void;
-  onRefresh?: () => void;
+  onPayAction?: () => void;
+  onRefreshAction?: () => void;
 }) {
-  const action = getOrderPaymentAction(order);
-
-  if (action.kind === 'cash') {
-    return (
-      <Alert>
-        <AlertTitle>Заказ оформлен</AlertTitle>
-        <AlertDescription>Оплата при получении.</AlertDescription>
-      </Alert>
-    );
-  }
-
-  if (action.kind === 'paid') {
-    return (
-      <Alert>
-        <AlertTitle>Заказ оплачен</AlertTitle>
-        <AlertDescription>Спасибо за покупку!</AlertDescription>
-      </Alert>
-    );
-  }
+  const kind = getOrderPaymentAction(order);
+  const d = data.get(kind) ?? data.get('default')!;
 
   return (
     <>
-      {action.kind === 'pending' ? (
+      {(d.title || d.description) && (
         <Alert>
-          <AlertTitle>Оплата обрабатывается</AlertTitle>
-          <AlertDescription>Проверьте статус через несколько секунд.</AlertDescription>
+          {d.title && <AlertTitle>{d.title}</AlertTitle>}
+          {d.description && <AlertDescription>{d.description}</AlertDescription>}
         </Alert>
-      ) : (
-        <Button type="button" variant="checkout" onClick={onPay}>
-          {action.retry ? 'Оплатить снова' : 'Оплатить'}
-        </Button>
       )}
-      <Button type="button" variant="outline" onClick={onRefresh}>
-        Проверить оплату
-      </Button>
+      {d.payButton?.(onPayAction)}
+      {d.refreshButton?.(onRefreshAction)}
     </>
+  );
+}
+
+/**
+ * Определяет, какое действие доступно по оплате заказа.
+ * Наличные и уже оплаченный заказ действий не требуют.
+ */
+export function getOrderPaymentAction(order: GetOrder200Data): OrderPaymentAction {
+  if (order.paymentMethod === 'cash_on_delivery') return 'cash';
+  if (order.paymentStatus === 'succeeded') return 'paid';
+  if (order.paymentStatus === 'pending') return 'pending';
+  if (order.paymentStatus === 'failed' || order.paymentStatus === 'cancelled') return 'retry';
+  return 'pay';
+}
+
+const data = new Map<
+  string,
+  {
+    title?: string;
+    description?: string;
+    payButton?: (onClick?: () => void) => ReactNode;
+    refreshButton?: (onClick?: () => void) => ReactNode;
+  }
+>([
+  ['cash', { title: 'Заказ оформлен', description: 'Оплата при получении.' }],
+  ['paid', { title: 'Заказ оплачен', description: 'Спасибо за покупку!' }],
+  [
+    'pending',
+    {
+      title: 'Оплата обрабатывается',
+      description: 'Проверьте статус через несколько секунд.',
+      payButton: (onClick) => <PayButton title="Продолжить оплату" onClick={onClick} />,
+      refreshButton: (onClick) => <RefreshButton onClick={onClick} />,
+    },
+  ],
+  [
+    'retry',
+    {
+      payButton: (onClick) => <PayButton title="Оплатить снова" onClick={onClick} />,
+      refreshButton: (onClick) => <RefreshButton onClick={onClick} />,
+    },
+  ],
+  [
+    'default',
+    {
+      payButton: (onClick) => <PayButton title="Оплатить" onClick={onClick} />,
+      refreshButton: (onClick) => <RefreshButton onClick={onClick} />,
+    },
+  ],
+]);
+
+function PayButton({ title, onClick }: { title: string; onClick?: () => void }) {
+  return (
+    <Button type="button" variant="checkout" onClick={onClick}>
+      {title}
+    </Button>
+  );
+}
+
+function RefreshButton({ onClick }: { onClick?: () => void }) {
+  return (
+    <Button type="button" variant="outline" onClick={onClick}>
+      Проверить оплату
+    </Button>
   );
 }

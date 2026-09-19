@@ -1,7 +1,15 @@
 import { ApiError } from './api-error';
 import type { ApiErrorBody } from './api-error-types';
 
-export async function handleResponseOrThrow<T>(response: Response): Promise<T> {
+type ResponseHandlingOptions = {
+  /** Навешивает `headers` на объектное тело ответа, чтобы вызывающий код мог читать Location/Retry-After. */
+  withHeaders?: boolean;
+};
+
+export async function handleResponseOrThrow<T>(
+  response: Response,
+  options: ResponseHandlingOptions = {},
+): Promise<T> {
   const text = await response.text(); // читаем body один раз, дальше — либо JSON.parse, либо undefined
 
   if (!response.ok) {
@@ -28,7 +36,17 @@ export async function handleResponseOrThrow<T>(response: Response): Promise<T> {
     );
   }
 
-  return text ? JSON.parse(text) : (undefined as T);
+  const data = (text ? JSON.parse(text) : undefined) as T;
+
+  if (options.withHeaders && data !== null && typeof data === 'object') {
+    Object.defineProperty(data, 'headers', {
+      value: response.headers,
+      enumerable: false,
+      configurable: true,
+    });
+  }
+
+  return data;
 }
 
 function safeParse<T>(text: string): T | null {

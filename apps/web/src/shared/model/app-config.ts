@@ -15,5 +15,6 @@ export const appConfig = {
     },
   },
   DEFAULT_CURRENCY: 'RUB',
-  QUOTE_WARNING_MINUTES: 3,
+  DISPLAY_QUOTE_WARNING_AFTER_MS: 3000,
+  PAYMENT_RETRY_AFTER_MS: 2000,
 } as const;

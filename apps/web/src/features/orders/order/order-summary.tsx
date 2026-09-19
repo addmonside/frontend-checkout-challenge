@@ -15,7 +15,6 @@ import {
 } from '@/shared/ui/kit/card';
 import { Separator } from '@/shared/ui/kit/separator';
 import { PAYMENT_METHOD_LABELS, PAYMENT_STATUS_LABELS } from '../common/status-labels';
-import { OrderActions } from './order-actions';
 import { OrderDelivery } from './order-delivery';
 import { OrderInfo, OrderInfoItem } from './order-info';
 import { OrderStatusBadge } from './order-status-badge';
@@ -23,13 +22,11 @@ import { OrderStatusBadge } from './order-status-badge';
 export function OrderSummary({
   order,
   deliveryMethods,
-  onPay,
-  onRefresh,
+  children,
 }: {
   order: GetOrder200Data;
   deliveryMethods?: GetCheckoutOptions200DataDeliveryMethodsItem[];
-  onPay?: () => void;
-  onRefresh?: () => void;
+  children?: React.ReactNode;
 }) {
   return (
     <Card>
@@ -69,7 +66,7 @@ export function OrderSummary({
           shipping={order.shipping}
           total={order.total}
         />
-        <OrderActions order={order} onPay={onPay} onRefresh={onRefresh} />
+        {children}
       </CardFooter>
     </Card>
   );

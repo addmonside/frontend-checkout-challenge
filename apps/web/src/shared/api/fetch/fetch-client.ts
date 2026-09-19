@@ -8,10 +8,10 @@ export async function fetchClient<T>(url: string, options: RequestInit): Promise
   if (response.status === 401) {
     token.clear();
     const retryResponse = await doFetchWithToken(url, options);
-    return handleResponseOrThrow<T>(retryResponse);
+    return handleResponseOrThrow<T>(retryResponse, { withHeaders: true });
   }
 
-  return handleResponseOrThrow<T>(response);
+  return handleResponseOrThrow<T>(response, { withHeaders: true });
 }
 
 async function doFetchWithToken(url: string, options: RequestInit): Promise<Response> {
