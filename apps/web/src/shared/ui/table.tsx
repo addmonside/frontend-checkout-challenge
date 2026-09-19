@@ -198,11 +198,14 @@ export function DataTable<TData extends RowData>({
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-        <div className="text-muted-foreground">Всего: {total}</div>
+        <div className="text-muted-foreground hidden sm:block">Всего: {total}</div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-1 flex-wrap items-center justify-between gap-3 sm:flex-none sm:justify-end sm:gap-4">
           <label className="text-muted-foreground flex items-center gap-2">
-            На странице
+            <span className="text-muted-foreground">
+              <span className="hidden sm:inline">Страница</span> {pageIndex + 1} из {pageCount}
+            </span>
+            <span className="hidden sm:inline">На странице</span>
             <select
               value={currentPageSize}
               onChange={(e) => table.setPageSize(Number(e.target.value))}
@@ -218,10 +221,6 @@ export function DataTable<TData extends RowData>({
               ))}
             </select>
           </label>
-
-          <span className="text-muted-foreground">
-            Страница {pageIndex + 1} из {pageCount}
-          </span>
 
           <div className="flex gap-2">
             <button

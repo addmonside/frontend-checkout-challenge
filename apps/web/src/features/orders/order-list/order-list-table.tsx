@@ -51,7 +51,7 @@ const columns = columnHelper.columns([
     meta: { align: 'right' },
     cell: (info) => <Price value={info.getValue()} currency={info.row.original.currency} />,
   }),
-  // Сортируем по timestamp, а не по строке: в ISO-строках могут быть разные смещения
+
   columnHelper.accessor((order) => Date.parse(order.createdAt), {
     id: 'createdAt',
     header: 'Создан',
