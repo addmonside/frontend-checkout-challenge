@@ -2,13 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 import { CartEmpty } from '@/services/cart';
+import { useCreateOrder } from '@/services/orders';
 import { useErrorRedirect } from '@/services/utility/errors';
 import { routes } from '@/shared/model';
 import { ButtonLink } from '@/shared/ui/button-link';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { useCheckoutOptions } from '../../common/use-checkout-options';
-import { useCreateOrder } from '../model/use-create-order';
-import { useQuote } from '../model/use-qoute';
+import { useQuote } from '../model/use-quote';
 import { CheckoutPaymentContent } from './checkout-payment-content';
 import { CheckoutPaymentSkeleton } from './checkout-payment-skeleton';
 import { CheckoutPaymentStatus } from './checkout-payment-status';

@@ -1,10 +1,11 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { toApiError, useCreateOrder as useCreateOrderApi } from '@/shared/api';
-import { CreateOrder201Data, CreateOrderBody } from '@/shared/api/gen/model';
-
-// todo надо ли переносить логику в заказы???
+import { CreateOrder201Data, CreateOrderBody, GetOrder200 } from '@/shared/api/gen/model';
+import { cacheCreatedOrder } from './order-cache';
 
 export function useCreateOrder(quoteId: string, onSuccess?: (data: CreateOrder201Data) => void) {
+  const queryClient = useQueryClient();
   // ! ключ генерируется один раз на хук для идемпотентности
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const idempotencyKey = useMemo(() => crypto.randomUUID(), [quoteId]);
@@ -17,8 +18,13 @@ export function useCreateOrder(quoteId: string, onSuccess?: (data: CreateOrder20
     mutation: {
       meta: { suppressErrorToast: true },
       onSuccess: (res) => {
-        // todo: ревалидировать корзину и quite
-        onSuccess?.(res.data as unknown as CreateOrder201Data);
+        const order = res.data as unknown as CreateOrder201Data;
+        cacheCreatedOrder(queryClient, {
+          orderId: order.id,
+          quoteId,
+          order: res as unknown as GetOrder200,
+        });
+        onSuccess?.(order);
       },
     },
     request: {
