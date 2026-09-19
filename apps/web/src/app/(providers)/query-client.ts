@@ -24,6 +24,8 @@ export function createQueryClient() {
           if (error instanceof ApiError && error.status < 500) return false;
           return failureCount < 2;
         },
+        staleTime: 60_000,
+        refetchOnWindowFocus: false,
       },
     },
     queryCache: new QueryCache({
