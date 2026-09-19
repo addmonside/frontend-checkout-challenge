@@ -1,25 +1,26 @@
 'use client';
 
-import { useAtom } from 'jotai/react';
 import { GetCheckoutOptions200DataPaymentMethodsItem } from '@/shared/api/gen/model';
+import { CreateOrderBody } from '@/shared/api/gen/model/createOrderBody';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { FieldError } from '@/shared/ui/kit/field';
 import { ToggleGroup } from '@/shared/ui/kit/toggle-group';
-import { checkoutPaymentAtom } from '../model/checkout-payment-atom';
 import { CheckoutPaymentMethodItem } from './checkout-payment-method-item';
 
 export function CheckoutPaymentMethod({
   paymentMethods,
+  value,
+  onChange,
   error,
 }: {
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[] | undefined;
+  value: CreateOrderBody['paymentMethod'] | undefined;
+  onChange: (value: CreateOrderBody['paymentMethod'] | undefined) => void;
   error?: string;
 }) {
-  const [method, setMethod] = useAtom(checkoutPaymentAtom);
-
   const handleSelectMethod = (ids: string[]) => {
-    const meth = paymentMethods?.find((m) => ids.includes(m.id));
-    setMethod(meth?.id ?? undefined);
+    const method = paymentMethods?.find((item) => ids.includes(item.id));
+    onChange((method?.id as CreateOrderBody['paymentMethod'] | undefined) ?? undefined);
   };
 
   return (
@@ -30,7 +31,7 @@ export function CheckoutPaymentMethod({
       <CardContent>
         {!!paymentMethods ? (
           <ToggleGroup
-            value={method ? [method] : []}
+            value={value ? [value] : []}
             onValueChange={handleSelectMethod}
             variant="checkout"
             hasError={!!error}

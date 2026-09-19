@@ -13,5 +13,5 @@ export const useQuote = (quoteId: string) => {
 
   const err = toApiError(error);
 
-  return { quote, isPending, error: err, isSlateData: !!err?.isStaleData };
+  return { quote, isPending, error: err };
 };

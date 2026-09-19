@@ -1,9 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { CartEmpty } from '@/services/cart';
-import { useErrorPageRedirect } from '@/services/utility/errors';
+import { useErrorRedirect } from '@/services/utility/errors';
 import { routes } from '@/shared/model';
 import { ButtonLink } from '@/shared/ui/button-link';
 import { PageLayout } from '@/shared/ui/page-layout';
@@ -11,56 +10,42 @@ import { useCheckoutOptions } from '../../common/use-checkout-options';
 import { useCreateOrder } from '../model/use-create-order';
 import { useQuote } from '../model/use-qoute';
 import { CheckoutPaymentContent } from './checkout-payment-content';
+import { CheckoutPaymentSkeleton } from './checkout-payment-skeleton';
 import { CheckoutPaymentStatus } from './checkout-payment-status';
 
 export function CheckoutPayment({ quoteId }: { quoteId: string }) {
   const router = useRouter();
-  const goToErrorPage = useErrorPageRedirect();
   const { paymentMethods, isPending, error: checkoutError } = useCheckoutOptions();
-  const { quote, isPending: isPendingQuote, error: quoteError, isSlateData } = useQuote(quoteId);
+  const { quote, isPending: isPendingQuote, error: quoteError } = useQuote(quoteId);
   const {
     createOrder,
     isPending: isPendingCheckout,
     error: orderError,
     fieldErrors,
-  } = useCreateOrder(quoteId);
+  } = useCreateOrder(quoteId, (data) => {
+    router.push(routes.order(data.id));
+  });
 
-  const isNotFound = quoteError?.status === 404;
-  const isStaleReload = isSlateData && !isNotFound;
+  const isRedirected = useErrorRedirect(quoteError, { staleTo: routes.CHECKOUT });
+  if (isRedirected) return null; // защита от моргания перед редиректом
+
   const error = orderError?.isValidation ? undefined : orderError || quoteError || checkoutError;
 
-  useEffect(() => {
-    if (isNotFound) {
-      goToErrorPage(quoteError);
-      return;
-    }
-    if (isStaleReload) {
-      router.replace(routes.CHECKOUT);
-      return;
-    }
-  }, [goToErrorPage, isNotFound, isSlateData, isStaleReload, quoteError, router]);
-
-  if (isNotFound || isStaleReload) return null; // защита от моргания перед редиректом
-
   return isPending && isPendingQuote ? (
-    <div>Loading...</div>
+    <CheckoutPaymentSkeleton />
   ) : (
     <>
-      <PageLayout.Content>
-        <PageLayout.Error error={error} />
-      </PageLayout.Content>
+      <PageLayout.Error error={error} />
       {!!quote?.items.length && paymentMethods ? (
         <>
-          <PageLayout.Content>
-            <CheckoutPaymentStatus expiresAt={quote.expiresAt} />
-          </PageLayout.Content>
+          <CheckoutPaymentStatus expiresAt={quote.expiresAt} />
           <PageLayout.Content variant="checkout">
             <CheckoutPaymentContent
               quote={quote}
               paymentMethods={paymentMethods}
               isPending={isPendingCheckout}
-              onSubmit={createOrder}
               fieldErrors={fieldErrors}
+              onSubmit={createOrder}
             />
           </PageLayout.Content>
         </>

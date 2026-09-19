@@ -1,15 +1,14 @@
-import { useAtomValue } from 'jotai';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { toApiError, useCreateOrder as useCreateOrderApi } from '@/shared/api';
-import { CreateOrderBody } from '@/shared/api/gen/model';
-import { checkoutPaymentAtom } from './checkout-payment-atom';
+import { CreateOrder201Data, CreateOrderBody } from '@/shared/api/gen/model';
 
 // todo надо ли переносить логику в заказы???
 
-export function useCreateOrder(quoteId: string) {
+export function useCreateOrder(quoteId: string, onSuccess?: (data: CreateOrder201Data) => void) {
   // ! ключ генерируется один раз на хук для идемпотентности
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const idempotencyKey = useMemo(() => crypto.randomUUID(), [quoteId]);
+
   const {
     mutate,
     isPending,
@@ -17,26 +16,19 @@ export function useCreateOrder(quoteId: string) {
   } = useCreateOrderApi({
     mutation: {
       meta: { suppressErrorToast: true },
+      onSuccess: (res) => {
+        // todo: ревалидировать корзину и quite
+        onSuccess?.(res.data as unknown as CreateOrder201Data);
+      },
     },
     request: {
       headers: { 'Idempotency-Key': idempotencyKey },
     },
   });
-  const paymentMethod = useAtomValue(checkoutPaymentAtom);
-  const [attempted, setAttempted] = useState(false);
 
-  const fieldErrors = useMemo<Record<string, string>>(() => {
-    const clientErrors: Record<string, string> =
-      attempted && !paymentMethod ? { paymentMethod: 'Выберите способ оплаты' } : {};
-    const apiFieldErrors = toApiError(rawError)?.toFieldErrorMap() ?? {};
-    return { ...clientErrors, ...apiFieldErrors };
-  }, [attempted, paymentMethod, rawError]);
-
-  const createOrder = (customer: CreateOrderBody['customer']) => {
-    setAttempted(true);
-
-    if (!paymentMethod) return;
-    mutate({ data: { quoteId, customer, paymentMethod } });
+  const fieldErrors = useMemo(() => toApiError(rawError)?.toFieldErrorMap() ?? {}, [rawError]);
+  const createOrder = (data: CreateOrderBody) => {
+    mutate({ data });
   };
 
   return { createOrder, isPending, error: toApiError(rawError), fieldErrors };

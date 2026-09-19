@@ -1,13 +1,16 @@
 'use client';
 
 import { atomWithStorage } from 'jotai/utils';
-import { CreateOrderBodyPaymentMethod } from '@/shared/api/gen/model';
+import { CreateOrderBody } from '@/shared/api/gen/model';
 
-type PaymentMethod =
-  (typeof CreateOrderBodyPaymentMethod)[keyof typeof CreateOrderBodyPaymentMethod];
+export type CheckoutPaymentDraft = {
+  customer?: CreateOrderBody['customer'];
+  paymentMethod?: CreateOrderBody['paymentMethod'];
+};
 
-const LOCAL_STORAGE_KEY = 'checkout-payment-method';
-export const checkoutPaymentAtom = atomWithStorage<PaymentMethod | undefined>(
-  LOCAL_STORAGE_KEY,
+export const checkoutPaymentAtom = atomWithStorage<CheckoutPaymentDraft>(
+  'checkout-payment',
+  {},
   undefined,
+  { getOnInit: true },
 );

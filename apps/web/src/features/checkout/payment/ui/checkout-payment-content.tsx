@@ -1,14 +1,14 @@
+'use client';
+
 import { CartList } from '@/services/cart';
 import {
   CreateOrderBody,
   GetCheckoutOptions200DataPaymentMethodsItem,
   GetQuote200Data,
 } from '@/shared/api/gen/model';
-import { Button } from '@/shared/ui/kit/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
-import { CheckoutInfo } from '../../common/checkout-info';
-import { CheckoutPaymentCustomerForm } from './checkout-payment-customer-form';
-import { CheckoutPaymentMethod } from './checkout-payment-method';
+import { CheckoutPaymentFormValues } from '../model/use-checkout-payment-form';
+import { CheckoutPaymentForm } from './checkout-payment-form';
 
 export function CheckoutPaymentContent({
   quote,
@@ -19,10 +19,14 @@ export function CheckoutPaymentContent({
 }: {
   quote: GetQuote200Data;
   paymentMethods: GetCheckoutOptions200DataPaymentMethodsItem[];
-  onSubmit: (customer: CreateOrderBody['customer']) => void;
+  onSubmit: (v: CreateOrderBody) => void;
   isPending: boolean;
   fieldErrors: Record<string, string>;
 }) {
+  const handleSubmit = (values: CheckoutPaymentFormValues) => {
+    onSubmit({ quoteId: quote.id, ...values });
+  };
+
   return (
     <>
       <Card>
@@ -34,25 +38,12 @@ export function CheckoutPaymentContent({
         </CardContent>
       </Card>
       <div className="sticky top-0 z-20 h-fit flex-1">
-        <CheckoutPaymentMethod
+        <CheckoutPaymentForm
+          quote={quote}
           paymentMethods={paymentMethods}
-          error={fieldErrors['paymentMethod']}
-        />
-        <CheckoutPaymentCustomerForm
-          info={
-            <CheckoutInfo
-              subtotal={quote.subtotal}
-              currency={quote.currency}
-              shipping={quote.shipping}
-              total={quote.total}
-            />
-          }
-          onSubmit={onSubmit}
-          action={(props) => (
-            <Button variant="checkout" isPending={isPending} {...props}>
-              Сохранить
-            </Button>
-          )}
+          isPending={isPending}
+          fieldErrors={fieldErrors}
+          onSubmit={handleSubmit}
         />
       </div>
     </>
