@@ -1,31 +1,6 @@
-import { useAtomValue } from 'jotai';
-import { useMemo, useState } from 'react';
-import { useCreateQuote } from '@/shared/api';
-import { ApiError } from '@/shared/api';
-import { CreateQuote201Data } from '@/shared/api/gen/model';
-import { checkoutDeliveryAtom, courierFormTriggerAtom } from './checkout-delivery-atom';
-
-function buildClientFieldErrors(delivery?: {
-  method: 'pickup' | 'courier';
-  pickupPointId?: string;
-}) {
-  const errors: Record<string, string> = {};
-
-  if (!delivery) {
-    errors['delivery.method'] = 'Выберите способ доставки';
-    return errors;
-  }
-
-  if (delivery.method === 'pickup' && !delivery.pickupPointId) {
-    errors['delivery.pickupPointId'] = 'Выберите пункт выдачи';
-  }
-
-  return errors;
-}
-
-function toApiFieldErrors(error: unknown): Record<string, string> {
-  return error instanceof ApiError ? error.toFieldErrorMap() : {};
-}
+import { useMemo } from 'react';
+import { toApiError, useCreateQuote } from '@/shared/api';
+import { CreateQuote201Data, CreateQuoteBodyDelivery } from '@/shared/api/gen/model';
 
 export function useCreateCheckout(
   cartVersion: number,
@@ -33,32 +8,13 @@ export function useCreateCheckout(
 ) {
   const { mutate, isPending, error } = useCreateQuote({
     mutation: {
-      onSuccess: (res) => {
-        const quote = res.data as unknown as CreateQuote201Data;
-        onSuccess?.(quote);
-      },
+      onSuccess: (res) => onSuccess?.(res.data as unknown as CreateQuote201Data),
     },
   });
-  const delivery = useAtomValue(checkoutDeliveryAtom);
-  const courierTrigger = useAtomValue(courierFormTriggerAtom);
-  const [attempted, setAttempted] = useState(false);
 
-  const fieldErrors = useMemo(() => {
-    const clientErrors = attempted ? buildClientFieldErrors(delivery) : {};
-    return { ...clientErrors, ...toApiFieldErrors(error) };
-  }, [attempted, delivery, error]);
+  const fieldErrors = useMemo(() => toApiError(error)?.toFieldErrorMap() ?? {}, [error]);
 
-  const createCheckout = async () => {
-    setAttempted(true);
-
-    if (!delivery) return;
-    if (delivery.method === 'pickup' && !delivery.pickupPointId) return;
-
-    if (delivery.method === 'courier' && courierTrigger) {
-      const isValid = await courierTrigger();
-      if (!isValid) return;
-    }
-
+  const createCheckout = (delivery: CreateQuoteBodyDelivery) => {
     mutate({ data: { cartVersion, delivery } });
   };
 

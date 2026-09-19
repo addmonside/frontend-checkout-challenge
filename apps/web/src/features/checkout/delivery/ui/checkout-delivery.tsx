@@ -4,14 +4,15 @@ import { useRouter } from 'next/navigation';
 import { CartEmpty, CartList } from '@/services/cart';
 import { routes } from '@/shared/model';
 import { ButtonLink } from '@/shared/ui/button-link';
-import { Button } from '@/shared/ui/kit/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/kit/card';
 import { PageLayout } from '@/shared/ui/page-layout';
 import { useCheckoutOptions } from '../../common/use-checkout-options';
+import {
+  CheckoutDeliveryFormValues,
+  useCheckoutDeliveryForm,
+} from '../model/use-checkout-delivery-form';
 import { useCreateCheckout } from '../model/use-create-quote';
-import { CheckoutDeliveryAddress } from './checkout-delivery-address';
-import { CheckoutDeliveryInfo } from './checkout-delivery-info';
-import { CheckoutDeliveryMethod } from './checkout-delivery-method';
+import { CheckoutDeliveryForm } from './checkout-delivery-form';
 
 export function CheckoutDelivery() {
   const router = useRouter();
@@ -21,8 +22,20 @@ export function CheckoutDelivery() {
     isPending: isPendingCheckout,
     fieldErrors,
   } = useCreateCheckout(cart?.version || 0, (data) => {
-    router.push(routes.CHECKOUT_QUOTE.replace('[quoteId]', data.id));
+    router.push(routes.checkoutQuote(data.id));
   });
+  const { form } = useCheckoutDeliveryForm(fieldErrors);
+
+  const handleSubmit = (values: CheckoutDeliveryFormValues) => {
+    createCheckout(
+      values.delivery.method === 'pickup'
+        ? {
+            method: 'pickup',
+            pickupPointId: values.delivery.pickupPointId as 'point-center' | 'point-north',
+          }
+        : { method: 'courier', address: values.delivery.address },
+    );
+  };
 
   return isPending ? (
     <div>Loading...</div>
@@ -37,29 +50,13 @@ export function CheckoutDelivery() {
         </CardContent>
       </Card>
       <div className="sticky top-0 z-20 h-fit">
-        <CheckoutDeliveryMethod
+        <CheckoutDeliveryForm
+          form={form}
           deliveryMethods={deliveryMethods}
-          error={fieldErrors['delivery.method']}
-        />
-        <CheckoutDeliveryAddress
-          info={<CheckoutDeliveryInfo subtotal={cart.subtotal} currency={cart.currency} />}
-          errors={{
-            pickupPointId: fieldErrors['delivery.pickupPointId'],
-            city: fieldErrors['delivery.address.city'],
-            street: fieldErrors['delivery.address.street'],
-            house: fieldErrors['delivery.address.house'],
-            apartment: fieldErrors['delivery.address.apartment'],
-          }}
-          action={(props) => (
-            <Button
-              variant="checkout"
-              onClick={createCheckout}
-              isPending={isPendingCheckout}
-              {...props}
-            >
-              Оформить
-            </Button>
-          )}
+          subtotal={cart.subtotal}
+          currency={cart.currency}
+          isPending={isPendingCheckout}
+          onSubmit={handleSubmit}
         />
       </div>
     </PageLayout.Content>

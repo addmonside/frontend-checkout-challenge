@@ -1,34 +1,30 @@
 'use client';
 
-import { useAtom } from 'jotai/react';
 import { GetCheckoutOptions200DataDeliveryMethodsItemPickupPointsItem } from '@/shared/api/gen/model';
 import { FieldError } from '@/shared/ui/kit/field';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/shared/ui/kit/item';
 import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/kit/toggle-group';
-import { checkoutDeliveryAddressAtom } from '../model/checkout-delivery-atom';
 
 export function CheckoutDeliveryAddressPickup({
   pickupPoints,
+  value,
+  onChange,
   error,
 }: {
   pickupPoints: GetCheckoutOptions200DataDeliveryMethodsItemPickupPointsItem[];
+  value: string | undefined;
+  onChange: (value: string) => void;
   error?: string;
 }) {
-  const [address, setAddress] = useAtom(checkoutDeliveryAddressAtom);
-
-  const selectedPickupPointId =
-    address && 'pickupPointId' in address ? address.pickupPointId : undefined;
-
-  const handleSelectMethod = (value: string[]) => {
-    const point = pickupPoints.find((item) => item.id === value[0]);
-    setAddress(point ? { pickupPointId: point.id as 'point-center' | 'point-north' } : undefined);
+  const handleSelectPoint = (ids: string[]) => {
+    onChange(ids[0] ?? '');
   };
 
   return (
     <>
       <ToggleGroup
-        value={selectedPickupPointId ? [selectedPickupPointId] : []}
-        onValueChange={handleSelectMethod}
+        value={value ? [value] : []}
+        onValueChange={handleSelectPoint}
         variant="checkout"
         hasError={!!error}
       >

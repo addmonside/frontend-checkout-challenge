@@ -1,58 +1,20 @@
 'use client';
 
-import { useSetAtom } from 'jotai/react';
-import { useEffect, useLayoutEffect } from 'react';
-import { Controller } from 'react-hook-form';
-import type * as z from 'zod';
+import { Controller, UseFormReturn } from 'react-hook-form';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/ui/kit/field';
 import { Input } from '@/shared/ui/kit/input';
-import {
-  checkoutDeliveryAddressAtom,
-  courierFormTriggerAtom,
-} from '../model/checkout-delivery-atom';
-import {
-  courierAddressSchema,
-  useCheckoutDeliveryCourierForm,
-} from '../model/use-checkout-delivery-courier-form';
-
-type CourierFieldName = keyof z.infer<typeof courierAddressSchema>;
+import { CheckoutDeliveryFormValues } from '../model/use-checkout-delivery-form';
 
 export function CheckoutDeliveryAddressCourier({
-  errors,
+  form,
 }: {
-  errors?: Partial<Record<CourierFieldName, string>>;
+  form: UseFormReturn<CheckoutDeliveryFormValues>;
 }) {
-  const setCourierTrigger = useSetAtom(courierFormTriggerAtom);
-  const setAddress = useSetAtom(checkoutDeliveryAddressAtom);
-  const { form } = useCheckoutDeliveryCourierForm();
-  const values = form.watch();
-
-  useLayoutEffect(() => {
-    setCourierTrigger(() => () => form.trigger());
-    return () => setCourierTrigger(undefined);
-  }, [form, setCourierTrigger]);
-
-  useEffect(() => {
-    for (const [name, message] of Object.entries(errors ?? {})) {
-      const field = name as CourierFieldName;
-      if (message) {
-        form.setError(field, { type: 'server', message });
-      } else {
-        form.clearErrors(field);
-      }
-    }
-  }, [errors, form]);
-
-  useLayoutEffect(() => {
-    const parsed = courierAddressSchema.safeParse(values);
-    setAddress(parsed.success ? { address: parsed.data } : undefined);
-  }, [setAddress, values]);
-
   return (
     <>
       <FieldGroup>
         <Controller
-          name="city"
+          name="delivery.address.city"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -71,7 +33,7 @@ export function CheckoutDeliveryAddressCourier({
       </FieldGroup>
       <FieldGroup>
         <Controller
-          name="street"
+          name="delivery.address.street"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -90,7 +52,7 @@ export function CheckoutDeliveryAddressCourier({
       </FieldGroup>
       <FieldGroup>
         <Controller
-          name="house"
+          name="delivery.address.house"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -109,7 +71,7 @@ export function CheckoutDeliveryAddressCourier({
       </FieldGroup>
       <FieldGroup>
         <Controller
-          name="apartment"
+          name="delivery.address.apartment"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
